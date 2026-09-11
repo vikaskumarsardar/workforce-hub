@@ -1,0 +1,89 @@
+{
+  "name": "nestjs-microservices-masterclass",
+  "version": "1.0.0",
+  "description": "Production-grade NestJS Microservices Monorepo Learning Architecture",
+  "author": "Antigravity",
+  "private": true,
+  "license": "UNLICENSED",
+  "scripts": {
+    "build": "nest build",
+    "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
+    "start": "nest start",
+    "start:dev:gateway": "nest start api-gateway --watch",
+    "start:dev:auth": "nest start auth-service --watch",
+    "start:dev:orders": "nest start orders-service --watch",
+    "start:debug:gateway": "nest start api-gateway --debug --watch",
+    "start:prod:gateway": "node dist/apps/api-gateway/main",
+    "start:prod:auth": "node dist/apps/auth-service/main",
+    "start:prod:orders": "node dist/apps/orders-service/main",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": ".",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
+    ],
+    "coverageDirectory": "./coverage",
+    "testEnvironment": "node",
+    "roots": [
+      "<rootDir>/apps/",
+      "<rootDir>/libs/"
+    ],
+    "moduleNameMapper": {
+      "^@app/common(|/.*)$": "<rootDir>/libs/common/src/$1",
+      "^@gateway/(.*)$": "<rootDir>/apps/api-gateway/src/$1",
+      "^@auth/(.*)$": "<rootDir>/apps/auth-service/src/$1",
+      "^@orders/(.*)$": "<rootDir>/apps/orders-service/src/$1",
+      "^@notification/(.*)$": "<rootDir>/apps/notification-service/src/$1"
+    }
+  },
+  "dependencies": {
+    "@nestjs/common": "^10.4.1",
+    "@nestjs/config": "^3.2.3",
+    "@nestjs/core": "^10.4.1",
+    "@nestjs/microservices": "^10.4.1",
+    "@nestjs/platform-express": "^10.4.1",
+    "@nestjs/typeorm": "^12.0.1",
+    "@opentelemetry/api": "^1.9.1",
+    "@opentelemetry/auto-instrumentations-node": "^0.80.0",
+    "@opentelemetry/exporter-trace-otlp-grpc": "^0.222.0",
+    "@opentelemetry/resources": "^2.11.0",
+    "@opentelemetry/sdk-node": "^0.222.0",
+    "@opentelemetry/semantic-conventions": "^1.43.0",
+    "@types/ioredis": "^4.28.10",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
+    "ioredis": "^5.11.1",
+    "pg": "^8.23.0",
+    "pino": "^10.3.1",
+    "prom-client": "^15.1.3",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.1",
+    "typeorm": "^1.1.1"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^10.4.5",
+    "@nestjs/schematics": "^10.1.4",
+    "@nestjs/testing": "^10.4.22",
+    "@types/express": "^4.17.21",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^20.16.5",
+    "@types/supertest": "^7.2.1",
+    "jest": "^30.5.1",
+    "supertest": "^7.2.2",
+    "ts-jest": "^29.4.12",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  }
+}
