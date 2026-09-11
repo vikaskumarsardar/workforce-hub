@@ -45,14 +45,20 @@
       "^@gateway/(.*)$": "<rootDir>/apps/api-gateway/src/$1",
       "^@auth/(.*)$": "<rootDir>/apps/auth-service/src/$1",
       "^@orders/(.*)$": "<rootDir>/apps/orders-service/src/$1",
-      "^@notification/(.*)$": "<rootDir>/apps/notification-service/src/$1"
-    }
+      "^@notification/(.*)$": "<rootDir>/apps/notification-service/src/$1",
+      "^@nestjs/typeorm$": "<rootDir>/test/__mocks__/@nestjs/typeorm.ts"
+    },
+    "transformIgnorePatterns": [
+      "/node_modules/(?!(@nestjs/typeorm)/)"
+    ]
   },
   "dependencies": {
     "@nestjs/common": "^10.4.1",
     "@nestjs/config": "^3.2.3",
     "@nestjs/core": "^10.4.1",
+    "@nestjs/jwt": "^10.2.0",
     "@nestjs/microservices": "^10.4.1",
+    "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.4.1",
     "@nestjs/typeorm": "^12.0.1",
     "@opentelemetry/api": "^1.9.1",
@@ -61,10 +67,15 @@
     "@opentelemetry/resources": "^2.11.0",
     "@opentelemetry/sdk-node": "^0.222.0",
     "@opentelemetry/semantic-conventions": "^1.43.0",
+    "@types/bcrypt": "^5.0.2",
     "@types/ioredis": "^4.28.10",
+    "@types/passport-jwt": "^4.0.1",
+    "bcrypt": "^5.1.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "ioredis": "^5.11.1",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
     "pg": "^8.23.0",
     "pino": "^10.3.1",
     "prom-client": "^15.1.3",

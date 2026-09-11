@@ -10,6 +10,9 @@ export * from './constants/tracing.constants';
 export * from './dtos/create-user.dto';
 export * from './dtos/login-user.dto';
 export * from './dtos/create-order.dto';
+export * from './dtos/register-tenant.dto';
+export * from './dtos/onboard-employee.dto';
+export * from './dtos/refresh-token.dto';
 export * from './filters/rpc-exception.filter';
 export * from './tracing/correlation.context';
 export * from './tracing/correlation.middleware';
@@ -22,5 +25,12 @@ export * from './metrics/metrics.controller';
 export * from './metrics/metrics.module';
 export * from './database/database.module';
 export * from './database/entities';
+export * from './security/password.util';
+export * from './guards/tenant.guard';
+export * from './guards/permission.guard';
+export * from './guards/jwt.strategy';
+export * from './guards/jwt-auth.guard';
+export * from './decorators/permission.decorator';
+
 
 

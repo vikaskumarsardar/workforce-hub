@@ -2,8 +2,9 @@ import { Body, Controller, Inject, Logger, Post } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import {
   AUTH_SERVICE,
-  CreateUserDto,
   LoginUserDto,
+  RegisterTenantDto,
+  RefreshTokenDto,
   PATTERNS,
   ROUTES,
 } from '@app/common';
@@ -17,11 +18,11 @@ export class AuthController {
     @Inject(AUTH_SERVICE) private readonly authClient: ClientProxy,
   ) {}
 
-  @Post(ROUTES.AUTH.REGISTER)
-  async register(@Body() createUserDto: CreateUserDto) {
-    this.logger.log(`Forwarding user registration request for email: ${createUserDto.email}`);
+  @Post(ROUTES.AUTH.REGISTER_TENANT)
+  async registerTenant(@Body() registerTenantDto: RegisterTenantDto) {
+    this.logger.log(`Forwarding tenant registration request for domain: ${registerTenantDto.domain}`);
     return firstValueFrom(
-      this.authClient.send(PATTERNS.AUTH.REGISTER, createUserDto),
+      this.authClient.send(PATTERNS.AUTH.REGISTER_TENANT, registerTenantDto),
     );
   }
 
@@ -30,6 +31,14 @@ export class AuthController {
     this.logger.log(`Forwarding user login request for email: ${loginUserDto.email}`);
     return firstValueFrom(
       this.authClient.send(PATTERNS.AUTH.LOGIN, loginUserDto),
+    );
+  }
+
+  @Post(ROUTES.AUTH.REFRESH)
+  async refresh(@Body() refreshTokenDto: RefreshTokenDto) {
+    this.logger.log(`Forwarding refresh token request`);
+    return firstValueFrom(
+      this.authClient.send(PATTERNS.AUTH.REFRESH_TOKEN, refreshTokenDto),
     );
   }
 }

@@ -10,7 +10,12 @@ export const ORDERS_SERVICE = 'ORDERS_SERVICE';
 export const PATTERNS = {
   AUTH: {
     REGISTER: 'auth.register',
+    REGISTER_TENANT: 'auth.register_tenant',
     LOGIN: 'auth.login',
+    REFRESH_TOKEN: 'auth.refresh_token',
+    ONBOARD_EMPLOYEE: 'auth.onboard_employee',
+    GET_PROFILE: 'auth.get_profile',
+    GET_EMPLOYEE_BY_ID: 'auth.get_employee_by_id',
     VALIDATE_TOKEN: 'auth.validate_token',
   },
   ORDERS: {
@@ -19,6 +24,7 @@ export const PATTERNS = {
     FIND_ONE: 'orders.find_one',
   },
 };
+
 
 /**
  * Event-Driven Message Patterns (Publish-Subscribe Pattern)

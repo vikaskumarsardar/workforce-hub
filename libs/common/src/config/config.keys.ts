@@ -17,6 +17,12 @@ export enum ConfigKeys {
   DB_POOL_MIN = 'DB_POOL_MIN',
   DB_POOL_IDLE_TIMEOUT = 'DB_POOL_IDLE_TIMEOUT',
 
+  // JWT & Security Configuration
+  JWT_SECRET = 'JWT_SECRET',
+  JWT_EXPIRATION = 'JWT_EXPIRATION',
+  JWT_REFRESH_SECRET = 'JWT_REFRESH_SECRET',
+  JWT_REFRESH_EXPIRATION = 'JWT_REFRESH_EXPIRATION',
+
   // Redis Configuration
   REDIS_HOST = 'REDIS_HOST',
   REDIS_PORT = 'REDIS_PORT',
@@ -41,10 +47,17 @@ export const DEFAULT_CONFIG = {
   [ConfigKeys.DB_POOL_MIN]: 2,
   [ConfigKeys.DB_POOL_IDLE_TIMEOUT]: 30000,
 
+  // JWT Defaults
+  [ConfigKeys.JWT_SECRET]: 'workforce_pulse_super_secret_jwt_key_2026',
+  [ConfigKeys.JWT_EXPIRATION]: '15m',
+  [ConfigKeys.JWT_REFRESH_SECRET]: 'workforce_pulse_refresh_secret_key_2026',
+  [ConfigKeys.JWT_REFRESH_EXPIRATION]: '7d',
+
   // Redis Defaults
   [ConfigKeys.REDIS_HOST]: 'localhost',
   [ConfigKeys.REDIS_PORT]: 6379,
 } as const;
+
 
 
 

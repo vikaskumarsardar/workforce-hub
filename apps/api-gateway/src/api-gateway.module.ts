@@ -1,6 +1,8 @@
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ClientProxyFactory, Transport } from '@nestjs/microservices';
+import { PassportModule } from '@nestjs/passport';
+import { JwtModule } from '@nestjs/jwt';
 import {
   AUTH_SERVICE,
   ORDERS_SERVICE,
@@ -9,8 +11,10 @@ import {
   CorrelationMiddleware,
   wrapClientWithCorrelation,
   MetricsModule,
+  JwtStrategy,
 } from '@app/common';
 import { AuthController } from '@gateway/auth/auth.controller';
+import { EmployeesController } from '@gateway/employees/employees.controller';
 import { OrdersController } from '@gateway/orders/orders.controller';
 
 @Module({
@@ -19,9 +23,27 @@ import { OrdersController } from '@gateway/orders/orders.controller';
       isGlobal: true,
       envFilePath: '.env',
     }),
+    PassportModule.register({ defaultStrategy: 'jwt' }),
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        secret: configService.get<string>(
+          ConfigKeys.JWT_SECRET,
+          DEFAULT_CONFIG[ConfigKeys.JWT_SECRET],
+        ),
+        signOptions: {
+          expiresIn: configService.get<string>(
+            ConfigKeys.JWT_EXPIRATION,
+            DEFAULT_CONFIG[ConfigKeys.JWT_EXPIRATION],
+          ),
+        },
+      }),
+    }),
     MetricsModule,
   ],
   providers: [
+    JwtStrategy,
     {
       provide: AUTH_SERVICE,
       useFactory: (configService: ConfigService) => {
@@ -67,7 +89,7 @@ import { OrdersController } from '@gateway/orders/orders.controller';
       inject: [ConfigService],
     },
   ],
-  controllers: [AuthController, OrdersController],
+  controllers: [AuthController, EmployeesController, OrdersController],
 })
 export class ApiGatewayModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
