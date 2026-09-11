@@ -105,13 +105,13 @@ Build the Leave Request lifecycle engine (`SUBMITTED` ➔ `MANAGER_APPROVED` ➔
 Build Redis-locked monthly gross-to-net salary calculations, tax withholdings, deduction breakdowns, and pay slip generation.
 
 ### 📋 Task Breakdown
-- [ ] **4.1 Distributed Lock Guard**: Implement Redis lock (`lock:payroll:{tenant_id}:{period}`) with 300s TTL to prevent concurrent execution.
-- [ ] **4.2 Execute Payroll Run**: `POST /api/v1/payroll/execute`
+- [x] **4.1 Distributed Lock Guard**: Implement Redis lock (`lock:payroll:{tenant_id}:{period}`) with 300s TTL to prevent concurrent execution.
+- [x] **4.2 Execute Payroll Run**: `POST /api/v1/payroll/execute`
   - Fetches active employees under the tenant.
   - Computes gross salary, tax withholdings (20%), health insurance (5%), and net salary.
   - Generates `PayrollRunEntity`, `PaySlipEntity`, and itemized `PaySlipItemEntity` records.
-- [ ] **4.3 Leave Locking**: Locks all approved leaves for the period (`status = 'PAYROLL_LOCKED'`).
-- [ ] **4.4 Employee Payslip Lookup**: `GET /api/v1/payroll/slips/me` & `GET /api/v1/payroll/slips/:id`.
+- [x] **4.3 Leave Locking**: Locks all approved leaves for the period (`status = 'PAYROLL_LOCKED'`).
+- [x] **4.4 Employee Payslip Lookup**: `GET /api/v1/payroll/slips/me` & `GET /api/v1/payroll/slips/:id`.
 
 ### ✅ Acceptance Criteria & Quality Gate
 1. Concurrent calls to execute payroll for the same period return `409 Conflict` (Redis lock active).
