@@ -56,16 +56,17 @@ Spin up PostgreSQL 16 and Redis 7 in Docker, install ORM dependencies, configure
 Implement JWT Authentication, Password Hashing, Refresh Token Rotation, Tenant Isolation Guard, and Employee Onboarding APIs.
 
 ### 📋 Task Breakdown
-- [ ] **2.1 Security Utilities**: Implement password hashing (bcrypt/argon2) and JWT strategy (`JwtAuthGuard`) in `@app/common`.
-- [ ] **2.2 Multi-Tenant Guard**: Build `TenantGuard` to validate `x-tenant-id` header and JWT tenant claims.
-- [ ] **2.3 Authentication APIs**:
+- [x] **2.1 Security Utilities**: Implement password hashing (bcrypt/argon2) and JWT strategy (`JwtAuthGuard`) in `@app/common`.
+- [x] **2.2 Multi-Tenant Guard**: Build `TenantGuard` to validate `x-tenant-id` header and JWT tenant claims.
+- [x] **2.3 Authentication APIs**:
+  - `POST /api/v1/auth/register-tenant`: Bootstraps new tenant and root admin employee.
   - `POST /api/v1/auth/login`: Validates credentials, issues Access (15m) & Refresh (7d) tokens.
   - `POST /api/v1/auth/refresh`: Rotates refresh tokens and issues fresh access tokens.
-- [ ] **2.4 Employee Management APIs**:
+- [x] **2.4 Employee Management APIs**:
   - `POST /api/v1/employees`: Creates employee, department link, position, and base salary.
   - `GET /api/v1/employees/me`: Retrieves authenticated user profile.
   - `GET /api/v1/employees/:id`: HR/Admin lookup endpoint.
-- [ ] **2.5 Audit Logging**: Automatically write employee creation/updates to `audit_logs`.
+- [x] **2.5 Audit Logging**: Automatically write employee creation/updates to `audit_logs`.
 
 ### ✅ Acceptance Criteria & Quality Gate
 1. Auth API returns signed JWTs with valid correlation IDs.
