@@ -2,19 +2,54 @@ import { initOpenTelemetry } from '@app/common';
 initOpenTelemetry('notification-service');
 
 import { NestFactory } from '@nestjs/core';
+import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { NotificationServiceModule } from '@notification/notification-service.module';
-import { StructuredLogger } from '@app/common';
+import { ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import {
+  ConfigKeys,
+  DEFAULT_CONFIG,
+  MicroserviceCorrelationInterceptor,
+  StructuredLogger,
+} from '@app/common';
 
 async function bootstrap() {
   const logger = new StructuredLogger('notification-service');
-  const app = await NestFactory.create(NotificationServiceModule, {
-    logger,
-  });
+  const app = await NestFactory.create(NotificationServiceModule, { logger });
 
   app.useLogger(logger);
 
-  const port = Number(process.env.PORT ?? 3003);
+  const configService = app.get(ConfigService);
+  const host = configService.get<string>(
+    ConfigKeys.NOTIFICATION_SERVICE_HOST,
+    DEFAULT_CONFIG[ConfigKeys.NOTIFICATION_SERVICE_HOST],
+  );
+  const port = Number(
+    configService.get<number>(
+      ConfigKeys.NOTIFICATION_SERVICE_PORT,
+      DEFAULT_CONFIG[ConfigKeys.NOTIFICATION_SERVICE_PORT],
+    ),
+  );
+
+  app.connectMicroservice<MicroserviceOptions>({
+    transport: Transport.TCP,
+    options: {
+      host,
+      port,
+    },
+  });
+
+  app.useGlobalInterceptors(new MicroserviceCorrelationInterceptor());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      transform: true,
+      forbidNonWhitelisted: true,
+    }),
+  );
+
+  await app.startAllMicroservices();
   await app.listen(port);
-  logger.log(`🚀 Notification Service listening on http://localhost:${port}`);
+  logger.log(`🚀 Notification Microservice running on TCP & HTTP metrics on ${host}:${port}`);
 }
 bootstrap();

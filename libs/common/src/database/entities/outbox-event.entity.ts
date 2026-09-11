@@ -19,6 +19,12 @@ export class OutboxEventEntity {
   @Column({ type: 'boolean', default: false })
   processed: boolean;
 
+  @Column({ type: 'integer', default: 0 })
+  retryCount: number;
+
+  @Column({ type: 'text', nullable: true })
+  lastError: string;
+
   @CreateDateColumn()
   createdAt: Date;
 }

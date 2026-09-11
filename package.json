@@ -52,7 +52,8 @@
       "^@payroll/(.*)$": "<rootDir>/apps/payroll-service/src/$1",
       "^@orders/(.*)$": "<rootDir>/apps/orders-service/src/$1",
       "^@notification/(.*)$": "<rootDir>/apps/notification-service/src/$1",
-      "^@nestjs/typeorm$": "<rootDir>/test/__mocks__/@nestjs/typeorm.ts"
+      "^@nestjs/typeorm$": "<rootDir>/test/__mocks__/@nestjs/typeorm.ts",
+      "^@nestjs/schedule$": "<rootDir>/test/__mocks__/@nestjs/schedule.ts"
     },
     "transformIgnorePatterns": [
       "/node_modules/(?!(@nestjs/typeorm)/)"
@@ -66,6 +67,7 @@
     "@nestjs/microservices": "^10.4.1",
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.4.1",
+    "@nestjs/schedule": "^12.0.1",
     "@nestjs/typeorm": "^12.0.1",
     "@opentelemetry/api": "^1.9.1",
     "@opentelemetry/auto-instrumentations-node": "^0.80.0",

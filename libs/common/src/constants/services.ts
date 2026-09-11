@@ -5,6 +5,7 @@ export const AUTH_SERVICE = 'AUTH_SERVICE';
 export const ORDERS_SERVICE = 'ORDERS_SERVICE';
 export const LEAVE_SERVICE = 'LEAVE_SERVICE';
 export const PAYROLL_SERVICE = 'PAYROLL_SERVICE';
+export const NOTIFICATION_SERVICE = 'NOTIFICATION_SERVICE';
 
 /**
  * Request-Response Message Patterns (Command Pattern)
@@ -34,6 +35,10 @@ export const PATTERNS = {
     GET_PAYROLL_RUN: 'payroll.get_run',
     GET_MY_SLIPS: 'payroll.get_my_slips',
     GET_SLIP_BY_ID: 'payroll.get_slip_by_id',
+  },
+  NOTIFICATION: {
+    PROCESS_OUTBOX_EVENT: 'notification.process_outbox_event',
+    SEND_EMAIL: 'notification.send_email',
   },
   ORDERS: {
     CREATE: 'orders.create',

@@ -19,6 +19,8 @@ export * from './dtos/leave/reject-leave.dto';
 export * from './dtos/payroll/execute-payroll.dto';
 export * from './redis/redis.service';
 export * from './redis/redis.module';
+export * from './outbox/outbox-relay.service';
+export * from './outbox/outbox-relay.module';
 export * from './filters/rpc-exception.filter';
 export * from './tracing/correlation.context';
 export * from './tracing/correlation.middleware';
