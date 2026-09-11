@@ -6,6 +6,7 @@ import { JwtModule } from '@nestjs/jwt';
 import {
   AUTH_SERVICE,
   ORDERS_SERVICE,
+  LEAVE_SERVICE,
   ConfigKeys,
   DEFAULT_CONFIG,
   CorrelationMiddleware,
@@ -15,6 +16,7 @@ import {
 } from '@app/common';
 import { AuthController } from '@gateway/auth/auth.controller';
 import { EmployeesController } from '@gateway/employees/employees.controller';
+import { LeavesController } from '@gateway/leaves/leaves.controller';
 import { OrdersController } from '@gateway/orders/orders.controller';
 
 @Module({
@@ -67,6 +69,28 @@ import { OrdersController } from '@gateway/orders/orders.controller';
       inject: [ConfigService],
     },
     {
+      provide: LEAVE_SERVICE,
+      useFactory: (configService: ConfigService) => {
+        const client = ClientProxyFactory.create({
+          transport: Transport.TCP,
+          options: {
+            host: configService.get<string>(
+              ConfigKeys.LEAVE_SERVICE_HOST,
+              DEFAULT_CONFIG[ConfigKeys.LEAVE_SERVICE_HOST],
+            ),
+            port: Number(
+              configService.get<number>(
+                ConfigKeys.LEAVE_SERVICE_PORT,
+                DEFAULT_CONFIG[ConfigKeys.LEAVE_SERVICE_PORT],
+              ),
+            ),
+          },
+        });
+        return wrapClientWithCorrelation(client);
+      },
+      inject: [ConfigService],
+    },
+    {
       provide: ORDERS_SERVICE,
       useFactory: (configService: ConfigService) => {
         const client = ClientProxyFactory.create({
@@ -89,7 +113,7 @@ import { OrdersController } from '@gateway/orders/orders.controller';
       inject: [ConfigService],
     },
   ],
-  controllers: [AuthController, EmployeesController, OrdersController],
+  controllers: [AuthController, EmployeesController, LeavesController, OrdersController],
 })
 export class ApiGatewayModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

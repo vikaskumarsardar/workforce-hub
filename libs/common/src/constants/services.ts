@@ -3,6 +3,7 @@
  */
 export const AUTH_SERVICE = 'AUTH_SERVICE';
 export const ORDERS_SERVICE = 'ORDERS_SERVICE';
+export const LEAVE_SERVICE = 'LEAVE_SERVICE';
 
 /**
  * Request-Response Message Patterns (Command Pattern)
@@ -17,6 +18,15 @@ export const PATTERNS = {
     GET_PROFILE: 'auth.get_profile',
     GET_EMPLOYEE_BY_ID: 'auth.get_employee_by_id',
     VALIDATE_TOKEN: 'auth.validate_token',
+  },
+  LEAVE: {
+    SUBMIT: 'leave.submit',
+    APPROVE: 'leave.approve',
+    REJECT: 'leave.reject',
+    VERIFY: 'leave.verify',
+    GET_MY_LEAVES: 'leave.get_my_leaves',
+    GET_LEAVE_BY_ID: 'leave.get_by_id',
+    GET_BALANCES: 'leave.get_balances',
   },
   ORDERS: {
     CREATE: 'orders.create',

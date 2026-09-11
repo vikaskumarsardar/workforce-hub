@@ -11,6 +11,7 @@ import {
 import { TenantEntity } from './tenant.entity';
 import { EmployeeEntity } from './employee.entity';
 import { LeaveTypeEntity } from './leave-type.entity';
+import { LeaveApprovalEntity } from './leave-approval.entity';
 
 @Entity('leave_requests')
 export class LeaveRequestEntity {
@@ -58,4 +59,7 @@ export class LeaveRequestEntity {
   @ManyToOne(() => LeaveTypeEntity)
   @JoinColumn({ name: 'leaveTypeId' })
   leaveType: LeaveTypeEntity;
+
+  @OneToMany(() => LeaveApprovalEntity, (approval) => approval.leaveRequest)
+  approvals: LeaveApprovalEntity[];
 }

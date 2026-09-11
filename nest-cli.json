@@ -52,6 +52,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/notification-service/tsconfig.app.json"
       }
+    },
+    "leave-service": {
+      "type": "application",
+      "root": "apps/leave-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/leave-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/leave-service/tsconfig.app.json"
+      }
     }
   }
 }

@@ -11,6 +11,16 @@ export const ROUTES = {
     ME: 'me',
     BY_ID: ':id',
   },
+  LEAVES: {
+    ROOT: 'api/v1/leaves',
+    SUBMIT: '',
+    APPROVE: ':id/approve',
+    REJECT: ':id/reject',
+    VERIFY: ':id/verify',
+    MY_LEAVES: 'me',
+    BALANCES: 'balances',
+    BY_ID: ':id',
+  },
   ORDERS: {
     ROOT: 'api/v1/orders',
     BY_ID: ':id',
