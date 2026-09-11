@@ -4,6 +4,7 @@
 export const AUTH_SERVICE = 'AUTH_SERVICE';
 export const ORDERS_SERVICE = 'ORDERS_SERVICE';
 export const LEAVE_SERVICE = 'LEAVE_SERVICE';
+export const PAYROLL_SERVICE = 'PAYROLL_SERVICE';
 
 /**
  * Request-Response Message Patterns (Command Pattern)
@@ -27,6 +28,12 @@ export const PATTERNS = {
     GET_MY_LEAVES: 'leave.get_my_leaves',
     GET_LEAVE_BY_ID: 'leave.get_by_id',
     GET_BALANCES: 'leave.get_balances',
+  },
+  PAYROLL: {
+    EXECUTE_RUN: 'payroll.execute_run',
+    GET_PAYROLL_RUN: 'payroll.get_run',
+    GET_MY_SLIPS: 'payroll.get_my_slips',
+    GET_SLIP_BY_ID: 'payroll.get_slip_by_id',
   },
   ORDERS: {
     CREATE: 'orders.create',

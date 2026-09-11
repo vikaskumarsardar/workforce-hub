@@ -21,6 +21,13 @@ export const ROUTES = {
     BALANCES: 'balances',
     BY_ID: ':id',
   },
+  PAYROLL: {
+    ROOT: 'api/v1/payroll',
+    EXECUTE: 'execute',
+    MY_SLIPS: 'slips/me',
+    SLIP_BY_ID: 'slips/:id',
+    RUN_BY_ID: 'runs/:id',
+  },
   ORDERS: {
     ROOT: 'api/v1/orders',
     BY_ID: ':id',

@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import { PayrollRunEntity } from './payroll-run.entity';
 import { EmployeeEntity } from './employee.entity';
+import { PaySlipItemEntity } from './pay-slip-item.entity';
 
 @Entity('pay_slips')
 export class PaySlipEntity {
@@ -40,4 +41,7 @@ export class PaySlipEntity {
   @ManyToOne(() => EmployeeEntity)
   @JoinColumn({ name: 'employeeId' })
   employee: EmployeeEntity;
+
+  @OneToMany(() => PaySlipItemEntity, (item) => item.paySlip)
+  items: PaySlipItemEntity[];
 }

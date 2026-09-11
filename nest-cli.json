@@ -61,6 +61,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/leave-service/tsconfig.app.json"
       }
+    },
+    "payroll-service": {
+      "type": "application",
+      "root": "apps/payroll-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/payroll-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/payroll-service/tsconfig.app.json"
+      }
     }
   }
 }

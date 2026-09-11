@@ -9,6 +9,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { TenantEntity } from './tenant.entity';
+import { PaySlipEntity } from './pay-slip.entity';
 
 @Entity('payroll_runs')
 export class PayrollRunEntity {
@@ -42,4 +43,7 @@ export class PayrollRunEntity {
   @ManyToOne(() => TenantEntity, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'tenantId' })
   tenant: TenantEntity;
+
+  @OneToMany(() => PaySlipEntity, (slip) => slip.payrollRun)
+  paySlips: PaySlipEntity[];
 }
