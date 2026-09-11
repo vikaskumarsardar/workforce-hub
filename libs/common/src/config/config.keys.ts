@@ -12,6 +12,10 @@ export enum ConfigKeys {
   DB_USERNAME = 'DB_USERNAME',
   DB_PASSWORD = 'DB_PASSWORD',
   DB_NAME = 'DB_NAME',
+  DB_SCHEMA = 'DB_SCHEMA',
+  DB_POOL_MAX = 'DB_POOL_MAX',
+  DB_POOL_MIN = 'DB_POOL_MIN',
+  DB_POOL_IDLE_TIMEOUT = 'DB_POOL_IDLE_TIMEOUT',
 
   // Redis Configuration
   REDIS_HOST = 'REDIS_HOST',
@@ -32,9 +36,15 @@ export const DEFAULT_CONFIG = {
   [ConfigKeys.DB_USERNAME]: 'postgres',
   [ConfigKeys.DB_PASSWORD]: 'postgres_password',
   [ConfigKeys.DB_NAME]: 'workforce_pulse',
+  [ConfigKeys.DB_SCHEMA]: 'public',
+  [ConfigKeys.DB_POOL_MAX]: 10,
+  [ConfigKeys.DB_POOL_MIN]: 2,
+  [ConfigKeys.DB_POOL_IDLE_TIMEOUT]: 30000,
 
   // Redis Defaults
   [ConfigKeys.REDIS_HOST]: 'localhost',
   [ConfigKeys.REDIS_PORT]: 6379,
 } as const;
+
+
 
