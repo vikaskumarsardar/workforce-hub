@@ -126,13 +126,13 @@ Build Redis-locked monthly gross-to-net salary calculations, tax withholdings, d
 Process `outbox_events` reliably using a background relay worker and dispatch HTML email notifications with zero event loss.
 
 ### 📋 Task Breakdown
-- [ ] **5.1 Outbox Polling Relay**: Implement `OutboxRelayService` running every 2,000ms using `@nestjs/schedule`.
-- [ ] **5.2 Microservice Event Dispatcher**: Send outbox events to `notification-service` over ClientTCP socket.
-- [ ] **5.3 Email Templates**: Render clean HTML templates for:
+- [x] **5.1 Outbox Polling Relay**: Implement `OutboxRelayService` running every 2,000ms using `@nestjs/schedule`.
+- [x] **5.2 Microservice Event Dispatcher**: Send outbox events to `notification-service` over ClientTCP socket.
+- [x] **5.3 Email Templates**: Render clean HTML templates for:
   - Welcome Employee Onboarding
   - Leave Submitted / Approved / Rejected Alerts
   - Monthly Payslip Available Notification
-- [ ] **5.4 Idempotency & Retries**: Mark `outbox_events.processed = true` on ACK; retry failed events up to 3 times.
+- [x] **5.4 Idempotency & Retries**: Mark `outbox_events.processed = true` on ACK; retry failed events up to 3 times.
 
 ### ✅ Acceptance Criteria & Quality Gate
 1. Events written to `outbox_events` are picked up and processed within 2 seconds.
