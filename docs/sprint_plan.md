@@ -146,13 +146,13 @@ Process `outbox_events` reliably using a background relay worker and dispatch HT
 Run end-to-end integration tests across all microservices, audit distributed tracing in Grafana Tempo, verify Prometheus metrics with exemplars, and perform load testing.
 
 ### 📋 Task Breakdown
-- [ ] **6.1 E2E Test Suite**: Full lifecycle integration test:
+- [x] **6.1 E2E Test Suite**: Full lifecycle integration test:
   `Login` ➔ `Onboard Employee` ➔ `Submit Leave` ➔ `Approve Leave` ➔ `Execute Payroll` ➔ `Verify Payslip & Outbox Event`.
-- [ ] **6.2 Telemetry Verification**:
+- [x] **6.2 Telemetry Verification**:
   - Open Grafana Tempo (`http://localhost:3000`) and verify complete trace graphs across Gateway ➔ Microservices ➔ PostgreSQL queries.
   - Inspect Pino JSON logs to confirm `traceId`, `spanId`, and `correlationId` presence.
   - Scrape `/metrics` to verify `http_request_duration_seconds` histograms with trace exemplars.
-- [ ] **6.3 Final Code Hygiene**: Run `npx tsc --noEmit` and `npm test` across all libs and services.
+- [x] **6.3 Final Code Hygiene**: Run `npx tsc --noEmit` and `npm test` across all libs and services.
 
 ### ✅ Acceptance Criteria & Quality Gate
 1. 100% test pass rate across unit and E2E suites.
