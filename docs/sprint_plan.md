@@ -81,16 +81,16 @@ Implement JWT Authentication, Password Hashing, Refresh Token Rotation, Tenant I
 Build the Leave Request lifecycle engine (`SUBMITTED` ➔ `MANAGER_APPROVED` ➔ `HR_VERIFIED` ➔ `PAYROLL_LOCKED`) with balance checks and atomic transactional outbox events.
 
 ### 📋 Task Breakdown
-- [ ] **3.1 Leave Balance Allocation**: Auto-generate annual `LeaveBalanceEntity` records when an employee is onboarded.
-- [ ] **3.2 Submit Leave Request**: `POST /api/v1/leaves`
+- [x] **3.1 Leave Balance Allocation**: Auto-generate annual `LeaveBalanceEntity` records when an employee is onboarded.
+- [x] **3.2 Submit Leave Request**: `POST /api/v1/leaves`
   - Validates date range logic (end date > start date).
   - Checks if available balance >= requested days.
   - Deducts pending days and sets status to `SUBMITTED`.
-- [ ] **3.3 Approval Workflow**: `POST /api/v1/leaves/:id/approve` & `reject`
+- [x] **3.3 Approval Workflow**: `POST /api/v1/leaves/:id/approve`, `reject`, and `verify`
   - Enforces manager/HR authorization checks.
-  - Transitions state to `MANAGER_APPROVED` or `REJECTED`.
+  - Transitions state to `MANAGER_APPROVED`, `HR_VERIFIED`, or `REJECTED`.
   - Records step entry in `leave_approvals`.
-- [ ] **3.4 Atomic Outbox Event**: Inserts `leave.submitted` / `leave.approved` into `outbox_events` within the same DB transaction.
+- [x] **3.4 Atomic Outbox Event**: Inserts `leave.submitted` / `leave.approved` into `outbox_events` within the same DB transaction.
 
 ### ✅ Acceptance Criteria & Quality Gate
 1. Attempting to submit leave exceeding available balance throws `400 Bad Request`.
