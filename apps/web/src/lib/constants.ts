@@ -22,8 +22,19 @@ export const HTTP_HEADERS = {
 } as const;
 
 export const AUTH_ENDPOINTS = {
-  LOGIN: '/auth/login',
+  LOGIN: '/api/v1/auth/login',
   REFRESH: '/api/v1/auth/refresh',
+  REGISTER_TENANT: '/api/v1/auth/register-tenant',
+} as const;
+
+export const APP_ROUTES = {
+  HOME: '/',
+  LOGIN: '/login',
+  REGISTER_TENANT: '/register-tenant',
+  DASHBOARD: '/dashboard',
+  EMPLOYEES: '/employees',
+  LEAVES: '/leaves',
+  PAYROLL: '/payroll',
 } as const;
 
 export const KEYBOARD_KEYS = {
