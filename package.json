@@ -51,7 +51,6 @@
       "^@auth/(.*)$": "<rootDir>/apps/auth-service/src/$1",
       "^@leave/(.*)$": "<rootDir>/apps/leave-service/src/$1",
       "^@payroll/(.*)$": "<rootDir>/apps/payroll-service/src/$1",
-      "^@orders/(.*)$": "<rootDir>/apps/orders-service/src/$1",
       "^@notification/(.*)$": "<rootDir>/apps/notification-service/src/$1",
       "^@nestjs/typeorm$": "<rootDir>/test/__mocks__/@nestjs/typeorm.ts",
       "^@nestjs/schedule$": "<rootDir>/test/__mocks__/@nestjs/schedule.ts"

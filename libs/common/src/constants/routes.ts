@@ -28,8 +28,4 @@ export const ROUTES = {
     SLIP_BY_ID: 'slips/:id',
     RUN_BY_ID: 'runs/:id',
   },
-  ORDERS: {
-    ROOT: 'api/v1/orders',
-    BY_ID: ':id',
-  },
 } as const;

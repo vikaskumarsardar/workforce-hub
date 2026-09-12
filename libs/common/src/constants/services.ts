@@ -2,7 +2,6 @@
  * Injection tokens for microservice clients
  */
 export const AUTH_SERVICE = 'AUTH_SERVICE';
-export const ORDERS_SERVICE = 'ORDERS_SERVICE';
 export const LEAVE_SERVICE = 'LEAVE_SERVICE';
 export const PAYROLL_SERVICE = 'PAYROLL_SERVICE';
 export const NOTIFICATION_SERVICE = 'NOTIFICATION_SERVICE';
@@ -40,11 +39,6 @@ export const PATTERNS = {
     PROCESS_OUTBOX_EVENT: 'notification.process_outbox_event',
     SEND_EMAIL: 'notification.send_email',
   },
-  ORDERS: {
-    CREATE: 'orders.create',
-    FIND_ALL: 'orders.find_all',
-    FIND_ONE: 'orders.find_one',
-  },
 };
 
 
@@ -52,6 +46,5 @@ export const PATTERNS = {
  * Event-Driven Message Patterns (Publish-Subscribe Pattern)
  */
 export const EVENTS = {
-  ORDER_CREATED: 'events.order_created',
   USER_REGISTERED: 'events.user_registered',
 };

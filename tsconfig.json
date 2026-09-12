@@ -24,7 +24,6 @@
       "@auth/*": ["apps/auth-service/src/*"],
       "@leave/*": ["apps/leave-service/src/*"],
       "@payroll/*": ["apps/payroll-service/src/*"],
-      "@orders/*": ["apps/orders-service/src/*"],
       "@notification/*": ["apps/notification-service/src/*"]
     }
   }
