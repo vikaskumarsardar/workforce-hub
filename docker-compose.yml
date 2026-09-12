@@ -1,138 +1,102 @@
 version: '3.8'
 
 services:
-  api-gateway:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        APP_NAME: api-gateway
-    container_name: api-gateway
-    ports:
-      - "3000:3000"
-    environment:
-      - HTTP_PORT=3000
-      - AUTH_SERVICE_HOST=auth-service
-      - AUTH_SERVICE_PORT=3001
-      - ORDERS_SERVICE_HOST=orders-service
-      - ORDERS_SERVICE_PORT=3002
-    depends_on:
-      - auth-service
-      - orders-service
-    networks:
-      - nestjs-network
-
-  auth-service:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        APP_NAME: auth-service
-    container_name: auth-service
-    ports:
-      - "3001:3001"
-    environment:
-      - AUTH_SERVICE_HOST=0.0.0.0
-      - AUTH_SERVICE_PORT=3001
-    networks:
-      - nestjs-network
-
-  orders-service:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        APP_NAME: orders-service
-    container_name: orders-service
-    ports:
-      - "3002:3002"
-    environment:
-      - ORDERS_SERVICE_HOST=0.0.0.0
-      - ORDERS_SERVICE_PORT=3002
-    networks:
-      - nestjs-network
-
-  notification-service:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        APP_NAME: notification-service
-    container_name: notification-service
-    ports:
-      - "3003:3003"
-    environment:
-      - PORT=3003
-    networks:
-      - nestjs-network
-
-  # =========================================================
-  # Core Persistence Stack (PostgreSQL & Redis)
-  # =========================================================
   postgres:
     image: postgres:16-alpine
-    container_name: postgres
+    container_name: workforce_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespassword
+      POSTGRES_DB: workforce_pulse
     ports:
       - "5432:5432"
-    environment:
-      - POSTGRES_DB=workforce_pulse
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres_password
+    command:
+      - "postgres"
+      - "-c"
+      - "wal_level=logical"
+      - "-c"
+      - "max_wal_senders=10"
+      - "-c"
+      - "max_replication_slots=10"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    networks:
-      - nestjs-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d workforce_pulse"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   redis:
     image: redis:7-alpine
-    container_name: redis
+    container_name: workforce_redis
+    restart: always
     ports:
       - "6379:6379"
-    volumes:
-      - redis_data:/data
-    networks:
-      - nestjs-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
-  # =========================================================
-  # Observability Stack (Metrics & Dashboards & Traces)
-  # =========================================================
-  prometheus:
-    image: prom/prometheus:latest
-    container_name: prometheus
+  kafka:
+    image: bitnami/kafka:3.7.0
+    container_name: workforce_kafka
+    restart: always
     ports:
-      - "9090:9090"
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
-    networks:
-      - nestjs-network
-
-  grafana:
-    image: grafana/grafana:latest
-    container_name: grafana
-    ports:
-      - "3100:3000"
+      - "9092:9092"
+      - "9093:9093"
     environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin
-    networks:
-      - nestjs-network
+      - KAFKA_CFG_NODE_ID=0
+      - KAFKA_CFG_PROCESS_ROLES=controller,broker
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@localhost:9093
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+      - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true
+    volumes:
+      - kafka_data:/bitnami/kafka
+
+  debezium:
+    image: debezium/connect:2.5
+    container_name: workforce_debezium
+    restart: always
+    ports:
+      - "8083:8083"
+    environment:
+      - BOOTSTRAP_SERVERS=kafka:9092
+      - GROUP_ID=1
+      - CONFIG_STORAGE_TOPIC=my_connect_configs
+      - OFFSET_STORAGE_TOPIC=my_connect_offsets
+      - STATUS_STORAGE_TOPIC=my_connect_statuses
+      - CONNECT_KEY_CONVERTER=org.apache.kafka.connect.json.JsonConverter
+      - CONNECT_VALUE_CONVERTER=org.apache.kafka.connect.json.JsonConverter
+    depends_on:
+      - kafka
+      - postgres
 
   tempo:
-    image: grafana/tempo:latest
-    container_name: tempo
+    image: grafana/tempo:2.4.0
+    container_name: workforce_tempo
+    restart: always
     command: [ "-config.file=/etc/tempo.yaml" ]
     volumes:
-      - ./tempo.yaml:/etc/tempo.yaml
+      - ./infra/tempo.yaml:/etc/tempo.yaml
     ports:
-      - "3200:3200" # Tempo HTTP
       - "4317:4317" # OTLP gRPC
-    networks:
-      - nestjs-network
+      - "3200:3200" # Tempo UI/API
+
+  prometheus:
+    image: prom/prometheus:v2.51.0
+    container_name: workforce_prometheus
+    restart: always
+    volumes:
+      - ./infra/prometheus.yaml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
 
 volumes:
   postgres_data:
-  redis_data:
-
-networks:
-  nestjs-network:
-    driver: bridge
-
+  kafka_data:
