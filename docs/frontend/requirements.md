@@ -48,11 +48,6 @@ The **WorkforcePulse Enterprise Web Application** is a modern B2B SaaS web porta
 * **FR-FE-5.1 (Monthly Payroll Trigger)**: Interactive control panel to trigger automated monthly payroll (`period: "2026-09"`) with Redis lock indicator.
 * **FR-FE-5.2 (Gross-to-Net Breakdown)**: Live summary card displaying Total Gross, Total Tax Withholdings (20%), Total Health Insurance (5%), and Net Pay.
 * **FR-FE-5.3 (Digital Pay Slip Viewer)**: Printable/downloadable itemized pay slip modal featuring breakdown of base salary, bonus, tax, and net pay.
-
-### Module 6: Real-Time CDC & Telemetry Monitor (`/telemetry`)
-* **FR-FE-6.1 (Live Kafka CDC Stream)**: Real-time event log feed capturing sub-10ms Debezium CDC outbox events (`leave.outbox_events` and `payroll.outbox_events`).
-* **FR-FE-6.2 (OpenTelemetry Span Graph)**: Visual trace waterfalls demonstrating end-to-end W3C trace propagation from Gateway ➔ Microservices.
-
 ---
 
 ## 4. Non-Functional Requirements (NFRs)
@@ -61,3 +56,4 @@ The **WorkforcePulse Enterprise Web Application** is a modern B2B SaaS web porta
 * **NFR-FE-2 (Aesthetics & Design System)**: Ultra-sleek enterprise dark theme (Slate/Obsidian palette `#090d16`, glassmorphism cards, Inter typography scale).
 * **NFR-FE-3 (Accessibility)**: Compliance with WCAG 2.1 AA standards including keyboard navigation and aria-labels.
 * **NFR-FE-4 (Responsiveness)**: 100% responsive fluid grid system supporting Desktop (1440px+), Laptop (1024px), Tablet (768px), and Mobile (375px).
+

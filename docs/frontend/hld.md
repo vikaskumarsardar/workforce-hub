@@ -85,7 +85,6 @@ apps/web/
 | **`/employees`** | Protected (`ADMIN`, `HR_MANAGER`) | Employee Grid, Onboarding Modal, Profile Drawer | `GET /api/v1/employees`, `POST /api/v1/employees` |
 | **`/leaves`** | Protected (All Roles) | State Machine Kanban, Balance Meters, Approval Dialogs | `GET /api/v1/leaves`, `POST /api/v1/leaves`, `POST /api/v1/leaves/:id/approve` |
 | **`/payroll`** | Protected (`ADMIN`, `HR_MANAGER`) | Payroll Execution Panel, Payslip Download Modal | `POST /api/v1/payroll/execute`, `GET /api/v1/payroll/slips/me` |
-| **`/telemetry`** | Protected (`ADMIN`) | Live Kafka CDC Stream, OTLP Trace Graph | `GET /metrics`, Event Listener |
 
 ---
 

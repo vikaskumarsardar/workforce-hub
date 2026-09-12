@@ -60,17 +60,11 @@ gantt
   4. Build annual leave balance visual progress meters (`Vacation`, `Sick`, `Parental`).
 
 ### 🔹 Sprint 5: Automated Monthly Payroll Engine & Payslips
-- **Goal:** Build the payroll execution dashboard, Redis lock indicator, gross-to-net tax breakdown, and itemized payslip viewer.
+- **Goal:** Build the payroll execution dashboard, Redis lock indicator, gross-to-net tax breakdown, itemized payslip viewer, and final frontend E2E integration test verification.
 - **Tasks:**
   1. Build `/payroll` page featuring monthly payroll run trigger panel (`POST /api/v1/payroll/execute`).
   2. Build real-time Redis lock status indicator (`lock:payroll:{tenant}:{period}`).
   3. Build Gross-to-Net Summary Cards (20% Income Tax, 5% Health Insurance, Net Pay).
   4. Build printable/downloadable itemized Payslip Modal viewer.
+  5. Perform complete end-to-end integration test suite verification and production build (`npm run build`).
 
-### 🔹 Sprint 6: Live Kafka CDC Feed, Telemetry Stream & E2E Testing
-- **Goal:** Build real-time Kafka CDC outbox log feed, OpenTelemetry trace waterfall viewer, and complete E2E testing suite.
-- **Tasks:**
-  1. Build `/telemetry` page featuring live terminal-style streaming feed of Kafka CDC outbox events.
-  2. Build OpenTelemetry W3C trace span visualization graph.
-  3. Write Cypress/Playwright or Jest E2E integration test suite for frontend user flows.
-  4. Perform final build verification (`npm run build`) and git commit.
