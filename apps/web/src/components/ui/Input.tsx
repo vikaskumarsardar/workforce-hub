@@ -10,7 +10,9 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, label, error, leftIcon, rightIcon, id, ...props }, ref) => {
-    const inputId = id || (label ? label.toLowerCase().replace(/\s+/g, '-') : undefined);
+    const generatedId = React.useId();
+    const inputId = id || (label ? label.toLowerCase().replace(/\s+/g, '-') : `input-${generatedId}`);
+    const errorId = `${inputId}-error`;
 
     return (
       <div className="flex flex-col space-y-1.5 w-full">
@@ -21,13 +23,15 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         )}
         <div className="relative flex items-center">
           {leftIcon && (
-            <div className="absolute left-3 text-slate-400 pointer-events-none">
+            <div className="absolute left-3 text-slate-400 pointer-events-none" aria-hidden="true">
               {leftIcon}
             </div>
           )}
           <input
             id={inputId}
             ref={ref}
+            aria-invalid={Boolean(error)}
+            aria-describedby={error ? errorId : undefined}
             className={cn(
               'w-full bg-slate-900/80 border border-slate-700/80 text-slate-100 placeholder-slate-500 rounded-lg text-sm px-3.5 py-2.5 transition-all duration-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500',
               leftIcon && 'pl-10',
@@ -38,12 +42,16 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             {...props}
           />
           {rightIcon && (
-            <div className="absolute right-3 text-slate-400 cursor-pointer">
+            <div className="absolute right-3 text-slate-400">
               {rightIcon}
             </div>
           )}
         </div>
-        {error && <p className="text-xs text-rose-400 font-medium">{error}</p>}
+        {error && (
+          <p id={errorId} role="alert" aria-live="polite" className="text-xs text-rose-400 font-medium">
+            {error}
+          </p>
+        )}
       </div>
     );
   },

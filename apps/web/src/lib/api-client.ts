@@ -1,12 +1,13 @@
 import axios, { InternalAxiosRequestConfig } from 'axios';
 import { useAuthStore } from '@/store/useAuthStore';
+import { HTTP_STATUS, HTTP_HEADERS, STORAGE_KEYS, AUTH_ENDPOINTS } from '@/lib/constants';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,
   headers: {
-    'Content-Type': 'application/json',
+    [HTTP_HEADERS.CONTENT_TYPE]: 'application/json',
   },
 });
 
@@ -17,16 +18,16 @@ apiClient.interceptors.request.use(
     let tenantId = useAuthStore.getState().tenantId;
 
     if (typeof window !== 'undefined') {
-      token = token || localStorage.getItem('accessToken');
-      tenantId = tenantId || localStorage.getItem('tenantId');
+      token = token || localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN);
+      tenantId = tenantId || localStorage.getItem(STORAGE_KEYS.TENANT_ID);
     }
 
     if (token && config.headers) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers[HTTP_HEADERS.AUTHORIZATION] = `${HTTP_HEADERS.BEARER}${token}`;
     }
 
     if (tenantId && config.headers) {
-      config.headers['x-tenant-id'] = tenantId;
+      config.headers[HTTP_HEADERS.TENANT_ID] = tenantId;
     }
 
     return config;
@@ -54,13 +55,20 @@ apiClient.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response?.status === 401 && !originalRequest._retry && !originalRequest.url?.includes('/auth/login')) {
+    const isUnauthorized = error.response?.status === HTTP_STATUS.UNAUTHORIZED;
+    const isAlreadyRetried = Boolean(originalRequest?._retry);
+    const isLoginEndpoint = Boolean(originalRequest?.url?.includes(AUTH_ENDPOINTS.LOGIN));
+    const isAuthRefreshEndpoint = Boolean(originalRequest?.url?.includes(AUTH_ENDPOINTS.REFRESH));
+
+    const shouldRefreshToken = isUnauthorized && !isAlreadyRetried && !isLoginEndpoint && !isAuthRefreshEndpoint;
+
+    if (shouldRefreshToken) {
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject });
         })
           .then((token) => {
-            originalRequest.headers.Authorization = `Bearer ${token}`;
+            originalRequest.headers[HTTP_HEADERS.AUTHORIZATION] = `${HTTP_HEADERS.BEARER}${token}`;
             return apiClient(originalRequest);
           })
           .catch((err) => Promise.reject(err));
@@ -69,7 +77,9 @@ apiClient.interceptors.response.use(
       originalRequest._retry = true;
       isRefreshing = true;
 
-      const refreshToken = useAuthStore.getState().refreshToken || (typeof window !== 'undefined' ? localStorage.getItem('refreshToken') : null);
+      const refreshToken =
+        useAuthStore.getState().refreshToken ||
+        (typeof window !== 'undefined' ? localStorage.getItem(STORAGE_KEYS.REFRESH_TOKEN) : null);
 
       if (!refreshToken) {
         useAuthStore.getState().logout();
@@ -77,13 +87,13 @@ apiClient.interceptors.response.use(
       }
 
       try {
-        const { data } = await axios.post(`${API_BASE_URL}/api/v1/auth/refresh`, { refreshToken });
+        const { data } = await axios.post(`${API_BASE_URL}${AUTH_ENDPOINTS.REFRESH}`, { refreshToken });
         const newAccessToken = data.accessToken || data.data?.accessToken;
 
         if (newAccessToken) {
           useAuthStore.getState().setAccessToken(newAccessToken);
           processQueue(null, newAccessToken);
-          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+          originalRequest.headers[HTTP_HEADERS.AUTHORIZATION] = `${HTTP_HEADERS.BEARER}${newAccessToken}`;
           return apiClient(originalRequest);
         }
       } catch (refreshErr) {

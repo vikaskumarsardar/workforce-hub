@@ -1,13 +1,15 @@
 import React from 'react';
-import { Card } from './Card';
+import { Card } from '@/components/ui/Card';
 import { cn } from '@/lib/utils';
 import { TrendingUp, TrendingDown } from 'lucide-react';
+
+export type StatCardChangeType = 'positive' | 'negative' | 'neutral';
 
 export interface StatCardProps {
   title: string;
   value: string | number;
   change?: string;
-  changeType?: 'positive' | 'negative' | 'neutral';
+  changeType?: StatCardChangeType;
   icon: React.ReactNode;
   subtitle?: string;
 }
@@ -43,8 +45,8 @@ export const StatCard: React.FC<StatCardProps> = ({
               changeType === 'neutral' && 'bg-slate-800 text-slate-400 border-slate-700',
             )}
           >
-            {changeType === 'positive' && <TrendingUp className="w-3 h-3 mr-1" />}
-            {changeType === 'negative' && <TrendingDown className="w-3 h-3 mr-1" />}
+            {changeType === 'positive' && <TrendingUp className="w-3 h-3 mr-1" aria-hidden="true" />}
+            {changeType === 'negative' && <TrendingDown className="w-3 h-3 mr-1" aria-hidden="true" />}
             {change}
           </span>
         )}

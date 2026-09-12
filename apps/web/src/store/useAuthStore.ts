@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { STORAGE_KEYS, USER_ROLES, UserRole } from '@/lib/constants';
 
 export interface UserProfile {
   id: string;
@@ -6,7 +7,7 @@ export interface UserProfile {
   email: string;
   firstName: string;
   lastName: string;
-  roles: Array<'ADMIN' | 'HR_MANAGER' | 'LINE_MANAGER' | 'EMPLOYEE'>;
+  roles: UserRole[];
 }
 
 interface AuthState {
@@ -14,12 +15,12 @@ interface AuthState {
   refreshToken: string | null;
   tenantId: string | null;
   user: UserProfile | null;
-  activeRole: 'ADMIN' | 'HR_MANAGER' | 'LINE_MANAGER' | 'EMPLOYEE' | null;
+  activeRole: UserRole | null;
   isAuthenticated: boolean;
 
   setAuth: (payload: { accessToken: string; refreshToken: string; user: UserProfile }) => void;
   setTenantId: (tenantId: string) => void;
-  setActiveRole: (role: 'ADMIN' | 'HR_MANAGER' | 'LINE_MANAGER' | 'EMPLOYEE') => void;
+  setActiveRole: (role: UserRole) => void;
   setAccessToken: (token: string) => void;
   logout: () => void;
 }
@@ -33,7 +34,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   isAuthenticated: false,
 
   setAuth: ({ accessToken, refreshToken, user }) => {
-    const defaultRole = user.roles && user.roles.length > 0 ? user.roles[0] : 'EMPLOYEE';
+    const defaultRole = user.roles && user.roles.length > 0 ? user.roles[0] : USER_ROLES.EMPLOYEE;
     set({
       accessToken,
       refreshToken,
@@ -43,16 +44,16 @@ export const useAuthStore = create<AuthState>((set) => ({
       isAuthenticated: true,
     });
     if (typeof window !== 'undefined') {
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('refreshToken', refreshToken);
-      localStorage.setItem('tenantId', user.tenantId);
+      localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, accessToken);
+      localStorage.setItem(STORAGE_KEYS.REFRESH_TOKEN, refreshToken);
+      localStorage.setItem(STORAGE_KEYS.TENANT_ID, user.tenantId);
     }
   },
 
   setTenantId: (tenantId: string) => {
     set({ tenantId });
     if (typeof window !== 'undefined') {
-      localStorage.setItem('tenantId', tenantId);
+      localStorage.setItem(STORAGE_KEYS.TENANT_ID, tenantId);
     }
   },
 
@@ -63,7 +64,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   setAccessToken: (accessToken: string) => {
     set({ accessToken });
     if (typeof window !== 'undefined') {
-      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, accessToken);
     }
   },
 
@@ -77,9 +78,9 @@ export const useAuthStore = create<AuthState>((set) => ({
       isAuthenticated: false,
     });
     if (typeof window !== 'undefined') {
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
-      localStorage.removeItem('tenantId');
+      localStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
+      localStorage.removeItem(STORAGE_KEYS.REFRESH_TOKEN);
+      localStorage.removeItem(STORAGE_KEYS.TENANT_ID);
     }
   },
 }));
