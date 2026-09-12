@@ -2,9 +2,10 @@
 
 import React, { useEffect, useSyncExternalStore } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { useAuthStore } from '@/store/useAuthStore';
-import { STORAGE_KEYS, APP_ROUTES } from '@/lib/constants';
 import { Loader2 } from 'lucide-react';
+
+import { STORAGE_KEYS, APP_ROUTES } from '@/lib/constants';
+import { useAuthStore } from '@/store/useAuthStore';
 
 export interface AuthGuardProps {
   children: React.ReactNode;

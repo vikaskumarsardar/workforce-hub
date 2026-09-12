@@ -3,11 +3,12 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useAuthStore } from '@/store/useAuthStore';
+import { LogOut, User, Building, Users, Calendar, DollarSign, LayoutDashboard } from 'lucide-react';
+
 import { Button } from '@/components/ui/Button';
 import { USER_ROLES, UserRole, APP_ROUTES } from '@/lib/constants';
 import { cn } from '@/lib/utils';
-import { LogOut, User, Building, Users, Calendar, DollarSign, LayoutDashboard } from 'lucide-react';
+import { useAuthStore } from '@/store/useAuthStore';
 
 export const Header: React.FC = () => {
   const pathname = usePathname();
