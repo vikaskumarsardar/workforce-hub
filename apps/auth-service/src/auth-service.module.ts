@@ -30,7 +30,7 @@ import {
       isGlobal: true,
       envFilePath: '.env',
     }),
-    DatabaseModule,
+    DatabaseModule.forRoot('auth'),
     TypeOrmModule.forFeature([
       TenantEntity,
       EmployeeEntity,

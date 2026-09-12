@@ -21,7 +21,7 @@ import {
       isGlobal: true,
       envFilePath: '.env',
     }),
-    DatabaseModule,
+    DatabaseModule.forRoot('leave'),
     TypeOrmModule.forFeature([
       LeaveRequestEntity,
       LeaveBalanceEntity,

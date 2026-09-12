@@ -23,7 +23,7 @@ import {
       isGlobal: true,
       envFilePath: '.env',
     }),
-    DatabaseModule,
+    DatabaseModule.forRoot('payroll'),
     RedisModule,
     TypeOrmModule.forFeature([
       PayrollRunEntity,
