@@ -43,10 +43,11 @@ export default function RegisterTenantPage() {
       setTimeout(() => {
         router.push(APP_ROUTES.LOGIN);
       }, 2000);
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const axiosError = err as { code?: string; response?: { status?: number; data?: { message?: string | string[] } } };
       // Fallback for development if backend API gateway is offline
       const isDevFallback = process.env.NODE_ENV === 'development';
-      if (isDevFallback && (err.code === 'ERR_NETWORK' || err.response?.status === 404)) {
+      if (isDevFallback && (axiosError.code === 'ERR_NETWORK' || axiosError.response?.status === 404)) {
         setIsSuccess(true);
         setTimeout(() => {
           router.push(APP_ROUTES.LOGIN);
@@ -54,7 +55,7 @@ export default function RegisterTenantPage() {
         return;
       }
 
-      const message = err.response?.data?.message || 'Failed to register tenant organization. Domain or email may already be in use.';
+      const message = axiosError.response?.data?.message || 'Failed to register tenant organization. Domain or email may already be in use.';
       setErrorMessage(Array.isArray(message) ? message.join(', ') : message);
     } finally {
       setIsLoading(false);

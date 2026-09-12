@@ -1,13 +1,17 @@
 'use client';
 
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import { StatCard } from '@/components/ui/StatCard';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
+import { APP_ROUTES } from '@/lib/constants';
 import { Users, Calendar, DollarSign, Activity, Shield, Sparkles, ArrowRight } from 'lucide-react';
 
 export default function Home() {
+  const router = useRouter();
+
   return (
     <div className="min-h-screen bg-[#090d16] text-slate-100 flex flex-col">
       {/* Header */}
@@ -25,10 +29,10 @@ export default function Home() {
             </Badge>
           </div>
           <div className="flex items-center space-x-4">
-            <Button variant="outline" size="sm" onClick={() => window.location.href = '/login'}>
+            <Button variant="outline" size="sm" onClick={() => router.push(APP_ROUTES.LOGIN)}>
               Sign In
             </Button>
-            <Button variant="primary" size="sm" rightIcon={<ArrowRight className="w-4 h-4" />} onClick={() => window.location.href = '/register-tenant'}>
+            <Button variant="primary" size="sm" rightIcon={<ArrowRight className="w-4 h-4" />} onClick={() => router.push(APP_ROUTES.REGISTER_TENANT)}>
               Register Tenant
             </Button>
           </div>
@@ -54,7 +58,7 @@ export default function Home() {
               Enterprise B2B SaaS platform featuring Multi-Tenant Isolation, Leave State Machine Kanban, Redis-Locked Payroll, Transactional Outbox Relay, and Real-Time Kafka CDC.
             </p>
             <div className="flex items-center space-x-4 pt-2">
-              <Button variant="primary" size="lg" onClick={() => window.location.href = '/login'}>
+              <Button variant="primary" size="lg" onClick={() => router.push(APP_ROUTES.LOGIN)}>
                 Launch HR Portal
               </Button>
               <Button variant="secondary" size="lg" onClick={() => window.open('http://localhost:3000/docs', '_blank')}>

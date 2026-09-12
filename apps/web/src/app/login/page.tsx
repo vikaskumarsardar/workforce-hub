@@ -37,10 +37,11 @@ export default function LoginPage() {
       const { accessToken, refreshToken, user } = response.data.data || response.data;
       setAuth({ accessToken, refreshToken, user });
       router.push(APP_ROUTES.DASHBOARD);
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const axiosError = err as { code?: string; response?: { status?: number; data?: { message?: string } } };
       // Fallback for development if backend server is not running locally
       const isDevFallback = process.env.NODE_ENV === 'development';
-      if (isDevFallback && (err.code === 'ERR_NETWORK' || err.response?.status === 404)) {
+      if (isDevFallback && (axiosError.code === 'ERR_NETWORK' || axiosError.response?.status === 404)) {
         setAuth({
           accessToken: 'mock-dev-jwt-token-access',
           refreshToken: 'mock-dev-jwt-token-refresh',
@@ -57,7 +58,7 @@ export default function LoginPage() {
         return;
       }
 
-      const message = err.response?.data?.message || 'Invalid tenant domain or authentication credentials.';
+      const message = axiosError.response?.data?.message || 'Invalid tenant domain or authentication credentials.';
       setErrorMessage(Array.isArray(message) ? message.join(', ') : message);
     } finally {
       setIsLoading(false);
