@@ -56,12 +56,16 @@ export class DatabaseModule {
             },
           }),
           dataSourceFactory: async (options) => {
-            if (
-              options &&
+            if (!options) {
+              throw new Error('TypeORM options are undefined');
+            }
+
+            const isCustomPostgresSchema =
               options.type === 'postgres' &&
-              schemaName &&
-              schemaName !== 'public'
-            ) {
+              Boolean(schemaName) &&
+              schemaName !== 'public';
+
+            if (isCustomPostgresSchema) {
               try {
                 const client = new Client({
                   host: options.host,
@@ -78,9 +82,6 @@ export class DatabaseModule {
               } catch (err) {
                 // Silence schema creation error if DB connection is mocked in unit tests
               }
-            }
-            if (!options) {
-              throw new Error('TypeORM options are undefined');
             }
             return new DataSource(options).initialize();
           },
