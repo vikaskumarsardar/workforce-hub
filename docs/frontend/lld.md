@@ -82,7 +82,7 @@ export interface LeaveBalance {
 }
 ```
 
-### D. Payroll & Outbox CDC Contracts
+### D. Payroll Contracts
 ```typescript
 export interface PayrollRun {
   payrollRunId: string;
@@ -104,14 +104,6 @@ export interface PaySlip {
   netSalary: number;
   createdAt: string;
   items?: Array<{ id: string; type: 'EARNING' | 'DEDUCTION'; name: string; amount: number }>;
-}
-
-export interface OutboxCdcEvent {
-  id: string;
-  eventType: string;
-  payload: Record<string, any>;
-  createdAt: string;
-  sourceSchema?: string;
 }
 ```
 
@@ -141,16 +133,6 @@ export interface OutboxCdcEvent {
   }
   ```
 - **Behavior:** Displays tax calculation breakdown preview (20% Income Tax, 5% Health Insurance) and handles idempotency execution confirmation.
-
-### C. `KafkaCdcFeed` Component
-- **Props:**
-  ```typescript
-  interface KafkaCdcFeedProps {
-    events: OutboxCdcEvent[];
-    isConnected: boolean;
-  }
-  ```
-- **Behavior:** Renders a real-time terminal-style stream of Kafka CDC events with event badges, sub-10ms timestamp logs, and JSON payload inspector.
 
 ---
 

@@ -41,8 +41,7 @@ apps/web/
 │   │   │   ├── dashboard/      # Executive HR & System Metrics
 │   │   │   ├── employees/      # Employee Directory & Onboarding
 │   │   │   ├── leaves/         # Leave State Machine Kanban & Submissions
-│   │   │   ├── payroll/        # Monthly Payroll Engine & Payslips
-│   │   │   └── telemetry/      # Live Kafka CDC Stream & Telemetry
+│   │   │   └── payroll/        # Monthly Payroll Engine & Payslips
 │   │   ├── layout.tsx          # Root Layout (Theme, TanStack Query Provider)
 │   │   └── page.tsx            # Root Entry & Redirect Handler
 │   ├── components/             # Design System & Feature Components
@@ -51,14 +50,12 @@ apps/web/
 │   │   ├── dashboard/          # MetricCards, DepartmentChart, HealthStatus
 │   │   ├── employees/          # EmployeeTable, OnboardModal, EmployeeDrawer
 │   │   ├── leaves/             # LeaveKanban, SubmitLeaveModal, BalanceMeters
-│   │   ├── payroll/            # PayrollControlPanel, PayslipModal, GrossNetCard
-│   │   └── telemetry/          # KafkaCdcFeed, OpenTelemetryGraph
+│   │   └── payroll/            # PayrollControlPanel, PayslipModal, GrossNetCard
 │   ├── hooks/                  # Custom React Hooks & Data Queries
 │   │   ├── useAuth.ts          # Login, Register, Logout, Refresh Token
 │   │   ├── useEmployees.ts     # Employee CRUD operations
 │   │   ├── useLeaves.ts        # Leave State Machine transitions & balances
-│   │   ├── usePayroll.ts       # Payroll execution & payslip fetching
-│   │   └── useTelemetry.ts     # Live CDC stream subscriber
+│   │   └── usePayroll.ts       # Payroll execution & payslip fetching
 │   ├── lib/                    # Core Utilities & Clients
 │   │   ├── api-client.ts       # Axios instance with JWT & x-tenant-id interceptors
 │   │   └── utils.ts            # Formatting, currency, date helpers
