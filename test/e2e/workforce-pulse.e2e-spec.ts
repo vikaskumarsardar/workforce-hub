@@ -1,17 +1,7 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication, HttpStatus } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { ConfigService } from '@nestjs/config';
-import { of } from 'rxjs';
-import {
-  PasswordUtil,
-  TenantGuard,
-  PermissionGuard,
-  JwtAuthGuard,
-} from '@app/common';
+import { PasswordUtil } from '@app/common';
 
 describe('WorkforcePulse Platform End-to-End Lifecycle (E2E Integration)', () => {
-  let app: INestApplication;
   let jwtService: JwtService;
 
   const mockTenant = { id: 'tnt-acme-1', companyName: 'Acme Global', domain: 'acme.com' };
