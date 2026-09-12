@@ -8,7 +8,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { USER_ROLES, APP_ROUTES } from '@/lib/constants';
-import { Users, Calendar, DollarSign, Shield, ArrowRight, Activity, Building, Sparkles, UserCheck } from 'lucide-react';
+import { Users, Calendar, DollarSign, Shield, ArrowRight, Activity, Building, Sparkles } from 'lucide-react';
 
 export default function DashboardPage() {
   const { user, tenantId, activeRole } = useAuthStore();

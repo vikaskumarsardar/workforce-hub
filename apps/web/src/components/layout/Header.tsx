@@ -4,9 +4,9 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/useAuthStore';
-import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { USER_ROLES, UserRole, APP_ROUTES } from '@/lib/constants';
+import { cn } from '@/lib/utils';
 import { LogOut, User, Building, Users, Calendar, DollarSign, LayoutDashboard } from 'lucide-react';
 
 export const Header: React.FC = () => {
@@ -61,11 +61,12 @@ export const Header: React.FC = () => {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-medium transition-all ${
+                className={cn(
+                  'flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-medium transition-all',
                   isActive
                     ? 'bg-indigo-600/15 text-indigo-400 border border-indigo-500/20 font-semibold'
                     : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
-                }`}
+                )}
               >
                 <Icon className="w-4 h-4" aria-hidden="true" />
                 {item.label}
@@ -86,11 +87,12 @@ export const Header: React.FC = () => {
                 <button
                   key={role}
                   onClick={() => setActiveRole(role)}
-                  className={`px-2.5 py-1 rounded-lg text-[11px] font-mono font-semibold transition-all ${
+                  className={cn(
+                    'px-2.5 py-1 rounded-lg text-[11px] font-mono font-semibold transition-all',
                     activeRole === role
                       ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
                       : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
-                  }`}
+                  )}
                 >
                   {role}
                 </button>

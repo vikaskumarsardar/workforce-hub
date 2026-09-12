@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useSyncExternalStore } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuthStore } from '@/store/useAuthStore';
 import { STORAGE_KEYS, APP_ROUTES } from '@/lib/constants';
@@ -10,10 +10,16 @@ export interface AuthGuardProps {
   children: React.ReactNode;
 }
 
+const emptySubscribe = () => () => {};
+
 export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
   const router = useRouter();
   const pathname = usePathname();
-  const [isHydrated, setIsHydrated] = useState(false);
+  const isHydrated = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
   const { accessToken, tenantId, isAuthenticated, setAuth } = useAuthStore();
 
   useEffect(() => {
@@ -37,8 +43,6 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
           },
         });
       }
-
-      setIsHydrated(true);
 
       const hasValidToken = Boolean(accessToken || storedToken);
       const isPublicRoute = pathname === APP_ROUTES.LOGIN || pathname === APP_ROUTES.REGISTER_TENANT || pathname === APP_ROUTES.HOME;

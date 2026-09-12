@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { STORAGE_KEYS, USER_ROLES, UserRole } from '@/lib/constants';
+import { setCookie, deleteCookie } from '@/lib/cookies';
 
 export interface UserProfile {
   id: string;
@@ -47,6 +48,10 @@ export const useAuthStore = create<AuthState>((set) => ({
       localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, accessToken);
       localStorage.setItem(STORAGE_KEYS.REFRESH_TOKEN, refreshToken);
       localStorage.setItem(STORAGE_KEYS.TENANT_ID, user.tenantId);
+
+      setCookie(STORAGE_KEYS.ACCESS_TOKEN, accessToken);
+      setCookie(STORAGE_KEYS.REFRESH_TOKEN, refreshToken);
+      setCookie(STORAGE_KEYS.TENANT_ID, user.tenantId);
     }
   },
 
@@ -54,6 +59,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     set({ tenantId });
     if (typeof window !== 'undefined') {
       localStorage.setItem(STORAGE_KEYS.TENANT_ID, tenantId);
+      setCookie(STORAGE_KEYS.TENANT_ID, tenantId);
     }
   },
 
@@ -65,6 +71,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     set({ accessToken });
     if (typeof window !== 'undefined') {
       localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, accessToken);
+      setCookie(STORAGE_KEYS.ACCESS_TOKEN, accessToken);
     }
   },
 
@@ -81,6 +88,10 @@ export const useAuthStore = create<AuthState>((set) => ({
       localStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
       localStorage.removeItem(STORAGE_KEYS.REFRESH_TOKEN);
       localStorage.removeItem(STORAGE_KEYS.TENANT_ID);
+
+      deleteCookie(STORAGE_KEYS.ACCESS_TOKEN);
+      deleteCookie(STORAGE_KEYS.REFRESH_TOKEN);
+      deleteCookie(STORAGE_KEYS.TENANT_ID);
     }
   },
 }));
