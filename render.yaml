@@ -1,0 +1,71 @@
+services:
+  # 1. API Gateway (Public HTTP Web Service)
+  - type: web
+    name: workforce-api-gateway
+    env: node
+    region: ohio
+    plan: starter
+    rootDir: .
+    buildCommand: npm install && npx nest build api-gateway
+    startCommand: node dist/apps/api-gateway/main.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+
+  # 2. Auth Service (Background Microservice)
+  - type: worker
+    name: workforce-auth-service
+    env: node
+    region: ohio
+    plan: starter
+    rootDir: .
+    buildCommand: npm install && npx nest build auth-service
+    startCommand: node dist/apps/auth-service/main.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+
+  # 3. Leave Service (Background Microservice)
+  - type: worker
+    name: workforce-leave-service
+    env: node
+    region: ohio
+    plan: starter
+    rootDir: .
+    buildCommand: npm install && npx nest build leave-service
+    startCommand: node dist/apps/leave-service/main.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+
+  # 4. Payroll Service (Background Microservice)
+  - type: worker
+    name: workforce-payroll-service
+    env: node
+    region: ohio
+    plan: starter
+    rootDir: .
+    buildCommand: npm install && npx nest build payroll-service
+    startCommand: node dist/apps/payroll-service/main.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+
+  # 5. Notification Service (Kafka Consumer Microservice)
+  - type: worker
+    name: workforce-notification-service
+    env: node
+    region: ohio
+    plan: starter
+    rootDir: .
+    buildCommand: npm install && npx nest build notification-service
+    startCommand: node dist/apps/notification-service/main.js
+    envVars:
+      - key: NODE_ENV
+        value: production
