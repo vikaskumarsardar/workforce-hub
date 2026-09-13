@@ -149,7 +149,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
     >
       <form onSubmit={handleSubmit} className="space-y-4 mt-2">
         {error && (
-          <div className="p-3 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-medium">
+          <div className="p-3 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-600 dark:text-rose-400 text-xs font-medium">
             {error}
           </div>
         )}
@@ -186,17 +186,17 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* Department Select */}
           <div className="flex flex-col space-y-1.5">
-            <label className="text-xs font-medium text-slate-300 flex items-center gap-1.5">
-              <Building className="w-3.5 h-3.5 text-indigo-400" />
+            <label className="text-xs font-medium text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+              <Building className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
               Department *
             </label>
             <select
               value={formData.department}
               onChange={(e) => handleDepartmentChange(e.target.value)}
-              className="w-full bg-slate-900/80 border border-slate-700/80 text-slate-100 rounded-lg text-sm px-3.5 py-2.5 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+              className="w-full bg-slate-50 dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700/80 text-slate-900 dark:text-slate-100 rounded-lg text-sm px-3.5 py-2.5 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
             >
               {DEPARTMENTS.map((dept) => (
-                <option key={dept} value={dept} className="bg-slate-900 text-slate-100">
+                <option key={dept} value={dept} className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100">
                   {dept}
                 </option>
               ))}
@@ -205,17 +205,17 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
 
           {/* Position Select */}
           <div className="flex flex-col space-y-1.5">
-            <label className="text-xs font-medium text-slate-300 flex items-center gap-1.5">
-              <Briefcase className="w-3.5 h-3.5 text-indigo-400" />
+            <label className="text-xs font-medium text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+              <Briefcase className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
               Job Title / Position *
             </label>
             <select
               value={formData.position}
               onChange={(e) => updateFormField('position', e.target.value)}
-              className="w-full bg-slate-900/80 border border-slate-700/80 text-slate-100 rounded-lg text-sm px-3.5 py-2.5 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+              className="w-full bg-slate-50 dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700/80 text-slate-900 dark:text-slate-100 rounded-lg text-sm px-3.5 py-2.5 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
             >
               {(POSITIONS[formData.department] || []).map((pos) => (
-                <option key={pos} value={pos} className="bg-slate-900 text-slate-100">
+                <option key={pos} value={pos} className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100">
                   {pos}
                 </option>
               ))}
@@ -231,7 +231,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
             value={formData.baseSalary}
             onChange={(e) => updateFormField('baseSalary', e.target.value)}
             required
-            leftIcon={<DollarSign className="w-4 h-4 text-emerald-400" />}
+            leftIcon={<DollarSign className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />}
           />
           <Input
             label="Reporting Manager (Optional)"
@@ -244,8 +244,8 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
 
         {/* Role Selector */}
         <div className="flex flex-col space-y-1.5">
-          <label className="text-xs font-medium text-slate-300 flex items-center gap-1.5">
-            <Shield className="w-3.5 h-3.5 text-indigo-400" />
+          <label className="text-xs font-medium text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+            <Shield className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
             Assigned Portal Role *
           </label>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -257,8 +257,8 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                 className={cn(
                   'px-3 py-2 rounded-lg text-xs font-mono font-medium border transition-all text-center',
                   formData.role === r
-                    ? 'bg-indigo-600/20 border-indigo-500 text-indigo-300 font-semibold shadow-sm'
-                    : 'bg-slate-900/60 border-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                    ? 'bg-indigo-50 dark:bg-indigo-600/20 border-indigo-500 text-indigo-700 dark:text-indigo-300 font-semibold shadow-sm'
+                    : 'bg-slate-50 dark:bg-slate-900/60 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800'
                 )}
               >
                 {r}
@@ -267,7 +267,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
           </div>
         </div>
 
-        <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+        <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
           <Button type="button" variant="outline" size="md" onClick={onClose}>
             Cancel
           </Button>

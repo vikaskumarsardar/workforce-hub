@@ -23,8 +23,7 @@ export default function DashboardPage() {
   return (
     <div className="space-y-8">
       {/* Welcome Banner */}
-      <div className="relative glass-panel rounded-3xl p-8 overflow-hidden border border-slate-700/80">
-        <div className="absolute -right-10 -bottom-10 w-80 h-80 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none" aria-hidden="true" />
+      <div className="relative glass-panel rounded-3xl p-8 overflow-hidden border border-slate-200 dark:border-slate-800">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
           <div className="space-y-2">
             <div className="flex items-center gap-2">
@@ -35,10 +34,10 @@ export default function DashboardPage() {
                 <Sparkles className="w-3 h-3 mr-1" aria-hidden="true" /> Role: {activeRole || 'ADMIN'}
               </Badge>
             </div>
-            <h1 className="text-3xl font-extrabold tracking-tight text-slate-100">
+            <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100">
               Welcome back, {user ? `${user.firstName} ${user.lastName}` : 'Administrator'} 👋
             </h1>
-            <p className="text-slate-400 text-sm">
+            <p className="text-slate-600 dark:text-slate-400 text-sm">
               {roleTitles[activeRole || USER_ROLES.ADMIN]} • Multi-tenant isolation active
             </p>
           </div>
@@ -60,8 +59,8 @@ export default function DashboardPage() {
 
       {/* Role-Specific Metric Overview Cards */}
       <div className="space-y-4">
-        <h2 className="text-lg font-semibold text-slate-200 tracking-tight flex items-center gap-2">
-          <Activity className="w-5 h-5 text-indigo-400" aria-hidden="true" /> Executive Metrics Overview
+        <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-200 tracking-tight flex items-center gap-2">
+          <Activity className="w-5 h-5 text-indigo-600 dark:text-indigo-400" aria-hidden="true" /> Executive Metrics Overview
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -104,7 +103,7 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card hoverEffect className="flex flex-col justify-between">
           <CardHeader>
-            <div className="p-3 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 w-fit mb-2">
+            <div className="p-3 rounded-xl bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/20 text-indigo-600 dark:text-indigo-400 w-fit mb-2">
               <Users className="w-6 h-6" aria-hidden="true" />
             </div>
             <CardTitle>Employee Directory</CardTitle>
@@ -112,7 +111,7 @@ export default function DashboardPage() {
               Manage personnel records, departments, onboarding, and compensation history.
             </CardDescription>
           </CardHeader>
-          <CardContent className="pt-4 border-t border-slate-800">
+          <CardContent className="pt-4 border-t border-slate-200 dark:border-slate-800">
             <Link href={APP_ROUTES.EMPLOYEES}>
               <Button variant="outline" size="sm" className="w-full justify-between" rightIcon={<ArrowRight className="w-4 h-4" />}>
                 Explore Employees
@@ -123,7 +122,7 @@ export default function DashboardPage() {
 
         <Card hoverEffect className="flex flex-col justify-between">
           <CardHeader>
-            <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 w-fit mb-2">
+            <div className="p-3 rounded-xl bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 text-amber-600 dark:text-amber-400 w-fit mb-2">
               <Calendar className="w-6 h-6" aria-hidden="true" />
             </div>
             <CardTitle>Leave Approval Kanban</CardTitle>
@@ -131,7 +130,7 @@ export default function DashboardPage() {
               Review visual 4-column approval pipeline (SUBMITTED ➔ APPROVED ➔ VERIFIED).
             </CardDescription>
           </CardHeader>
-          <CardContent className="pt-4 border-t border-slate-800">
+          <CardContent className="pt-4 border-t border-slate-200 dark:border-slate-800">
             <Link href={APP_ROUTES.LEAVES}>
               <Button variant="outline" size="sm" className="w-full justify-between" rightIcon={<ArrowRight className="w-4 h-4" />}>
                 Manage Workflows
@@ -142,7 +141,7 @@ export default function DashboardPage() {
 
         <Card hoverEffect className="flex flex-col justify-between">
           <CardHeader>
-            <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 w-fit mb-2">
+            <div className="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 text-emerald-600 dark:text-emerald-400 w-fit mb-2">
               <DollarSign className="w-6 h-6" aria-hidden="true" />
             </div>
             <CardTitle>Automated Payroll Engine</CardTitle>
@@ -150,7 +149,7 @@ export default function DashboardPage() {
               Execute gross-to-net tax calculations, Redis distributed locking, and payslips.
             </CardDescription>
           </CardHeader>
-          <CardContent className="pt-4 border-t border-slate-800">
+          <CardContent className="pt-4 border-t border-slate-200 dark:border-slate-800">
             <Link href={APP_ROUTES.PAYROLL}>
               <Button variant="outline" size="sm" className="w-full justify-between" rightIcon={<ArrowRight className="w-4 h-4" />}>
                 Execute Payroll Run

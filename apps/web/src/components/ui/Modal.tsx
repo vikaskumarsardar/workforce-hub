@@ -64,17 +64,17 @@ export const Modal: React.FC<ModalProps> = ({
         aria-labelledby={titleId}
         aria-describedby={description ? descriptionId : undefined}
         className={cn(
-          'w-full glass-panel rounded-2xl shadow-2xl p-6 relative border border-slate-700/80 animate-in zoom-in-95 duration-200 focus:outline-none',
+          'w-full bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-6 relative border border-slate-200 dark:border-slate-800 animate-in zoom-in-95 duration-200 focus:outline-none',
           MODAL_MAX_WIDTHS[maxWidth],
         )}
       >
         <div className="flex items-start justify-between mb-4">
           <div>
-            <h3 id={titleId} className="text-xl font-semibold text-slate-100 tracking-tight">
+            <h3 id={titleId} className="text-xl font-semibold text-slate-900 dark:text-slate-100 tracking-tight">
               {title}
             </h3>
             {description && (
-              <p id={descriptionId} className="text-sm text-slate-400 mt-1">
+              <p id={descriptionId} className="text-sm text-slate-500 dark:text-slate-400 mt-1">
                 {description}
               </p>
             )}
@@ -82,7 +82,7 @@ export const Modal: React.FC<ModalProps> = ({
           <button
             onClick={onClose}
             aria-label="Close dialog"
-            className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="text-slate-400 hover:text-slate-700 dark:hover:text-white p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
             <X className="w-5 h-5" aria-hidden="true" />
           </button>
