@@ -153,12 +153,12 @@ export default function PayrollPage() {
   return (
     <div className="space-y-8 animate-in fade-in duration-300">
       {/* Header Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800/80 pb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-200 dark:border-slate-800/80 pb-6">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-100 tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight">
             Automated Monthly Payroll Engine
           </h1>
-          <p className="text-sm text-slate-400 mt-1">
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
             Gross-to-Net tax calculation engine with Redis distributed lock concurrency protection.
           </p>
         </div>
@@ -167,7 +167,7 @@ export default function PayrollPage() {
             aria-label="Select payroll execution period"
             value={selectedPeriod}
             onChange={(e) => setSelectedPeriod(e.target.value)}
-            className="bg-slate-900 border border-slate-700/80 text-slate-100 rounded-lg text-xs font-mono px-3.5 py-2.5 focus:outline-none focus:border-indigo-500"
+            className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700/80 text-slate-800 dark:text-slate-100 rounded-lg text-xs font-mono px-3.5 py-2.5 focus:outline-none focus:border-indigo-500"
           >
             {PAYROLL_PERIODS.map((period) => (
               <option key={period} value={period}>
@@ -196,43 +196,43 @@ export default function PayrollPage() {
           title="Total Gross Spend"
           value={formatCurrency(summary.totalGrossSpend)}
           subtitle={`Across ${summary.totalEmployees} active employees`}
-          icon={<DollarSign className="w-5 h-5 text-indigo-400" />}
+          icon={<DollarSign className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />}
         />
         <StatCard
           title="Income Tax (20%)"
           value={formatCurrency(summary.totalIncomeTax)}
           subtitle="Statutory withholding tax"
-          icon={<TrendingDown className="w-5 h-5 text-rose-400" />}
+          icon={<TrendingDown className="w-5 h-5 text-rose-600 dark:text-rose-400" />}
         />
         <StatCard
           title="Health Insurance (5%)"
           value={formatCurrency(summary.totalHealthInsurance)}
           subtitle="Mandatory healthcare pool"
-          icon={<ShieldCheck className="w-5 h-5 text-amber-400" />}
+          icon={<ShieldCheck className="w-5 h-5 text-amber-600 dark:text-amber-400" />}
         />
         <StatCard
           title="Total Net Payout"
           value={formatCurrency(summary.totalNetPayout)}
           subtitle="Direct deposited take-home pay"
-          icon={<CheckCircle2 className="w-5 h-5 text-emerald-400" />}
+          icon={<CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />}
         />
       </div>
 
       {/* Itemized Employee Payslips Table */}
       <div className="space-y-4 pt-2">
         <div className="flex items-center justify-between">
-          <h2 className="text-xs font-mono text-slate-400 uppercase tracking-wider flex items-center gap-2">
-            <FileText className="w-4 h-4 text-indigo-400" /> Itemized Employee Payslips ({selectedPeriod})
+          <h2 className="text-xs font-mono text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center gap-2 font-bold">
+            <FileText className="w-4 h-4 text-indigo-600 dark:text-indigo-400" /> Itemized Employee Payslips ({selectedPeriod})
           </h2>
-          <span className="text-xs font-mono text-slate-500">
-            Total Records: <span className="text-slate-300 font-semibold">{payslips.length}</span>
+          <span className="text-xs font-mono text-slate-500 dark:text-slate-400">
+            Total Records: <span className="text-slate-900 dark:text-slate-200 font-semibold">{payslips.length}</span>
           </span>
         </div>
 
-        <div className="glass-panel rounded-2xl border border-slate-800 overflow-x-auto">
+        <div className="glass-panel rounded-2xl border border-slate-200 dark:border-slate-800 overflow-x-auto shadow-sm">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-slate-800 bg-slate-900/50 text-[11px] font-mono uppercase text-slate-400 tracking-wider">
+              <tr className="border-b border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900/80 text-[11px] font-mono uppercase text-slate-700 dark:text-slate-300 font-bold tracking-wider">
                 <th className="py-3.5 px-4 font-semibold">Employee</th>
                 <th className="py-3.5 px-4 font-semibold">Department</th>
                 <th className="py-3.5 px-4 font-semibold">Gross Salary</th>
@@ -242,31 +242,31 @@ export default function PayrollPage() {
                 <th className="py-3.5 px-4 font-semibold text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60 text-xs">
+            <tbody className="divide-y divide-slate-200 dark:divide-slate-800/60 text-xs">
               {payslips.map((item) => (
-                <tr key={item.id} className="hover:bg-slate-900/60 transition-colors">
+                <tr key={item.id} className="hover:bg-slate-50 dark:hover:bg-slate-900/60 transition-colors">
                   <td className="py-3.5 px-4">
                     <div className="flex items-center space-x-3">
-                      <div className="w-8 h-8 rounded-lg bg-indigo-600/30 border border-indigo-500/30 flex items-center justify-center font-bold text-white text-xs">
+                      <div className="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-600/30 border border-indigo-200 dark:border-indigo-500/30 flex items-center justify-center font-bold text-indigo-600 dark:text-white text-xs">
                         {item.employeeName[0]}
                       </div>
                       <div>
-                        <div className="font-semibold text-slate-200">{item.employeeName}</div>
-                        <div className="text-[11px] text-slate-400 font-mono">{item.email}</div>
+                        <div className="font-semibold text-slate-900 dark:text-slate-200">{item.employeeName}</div>
+                        <div className="text-[11px] text-slate-500 dark:text-slate-400 font-mono">{item.email}</div>
                       </div>
                     </div>
                   </td>
-                  <td className="py-3.5 px-4 font-semibold text-indigo-300">{item.department}</td>
-                  <td className="py-3.5 px-4 font-mono text-slate-200 font-medium">
+                  <td className="py-3.5 px-4 font-semibold text-indigo-600 dark:text-indigo-300">{item.department}</td>
+                  <td className="py-3.5 px-4 font-mono text-slate-900 dark:text-slate-200 font-medium">
                     {formatCurrency(item.grossSalary)}
                   </td>
-                  <td className="py-3.5 px-4 font-mono text-rose-400">
+                  <td className="py-3.5 px-4 font-mono text-rose-600 dark:text-rose-400 font-semibold">
                     - {formatCurrency(item.incomeTax)}
                   </td>
-                  <td className="py-3.5 px-4 font-mono text-amber-400">
+                  <td className="py-3.5 px-4 font-mono text-amber-600 dark:text-amber-400 font-semibold">
                     - {formatCurrency(item.healthInsurance)}
                   </td>
-                  <td className="py-3.5 px-4 font-mono text-emerald-400 font-bold text-sm">
+                  <td className="py-3.5 px-4 font-mono text-emerald-600 dark:text-emerald-400 font-bold text-sm">
                     {formatCurrency(item.netPay)}
                   </td>
                   <td className="py-3.5 px-4 text-right">
@@ -274,7 +274,7 @@ export default function PayrollPage() {
                       variant="ghost"
                       size="sm"
                       onClick={() => setSelectedPayslip(item)}
-                      leftIcon={<FileText className="w-3.5 h-3.5 text-indigo-400" aria-hidden="true" />}
+                      leftIcon={<FileText className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" aria-hidden="true" />}
                     >
                       View Payslip
                     </Button>

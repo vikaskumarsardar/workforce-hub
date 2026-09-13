@@ -196,12 +196,12 @@ export default function LeavesPage() {
   return (
     <div className="space-y-8 animate-in fade-in duration-300">
       {/* Header Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800/80 pb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-200 dark:border-slate-800/80 pb-6">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-100 tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight">
             Leave Approval Studio
           </h1>
-          <p className="text-sm text-slate-400 mt-1">
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
             Visual 4-stage state machine Kanban pipeline with automated policy verification.
           </p>
         </div>
@@ -217,7 +217,7 @@ export default function LeavesPage() {
 
       {/* Leave Balance Meters */}
       <div className="space-y-3">
-        <h2 className="text-xs font-mono text-slate-400 uppercase tracking-wider">
+        <h2 className="text-xs font-mono text-slate-500 dark:text-slate-400 uppercase tracking-wider font-bold">
           Annual Allowance & Balance Breakdown
         </h2>
         <LeaveBalanceMeter balances={balances} />
@@ -226,11 +226,11 @@ export default function LeavesPage() {
       {/* Kanban Workflow Board */}
       <div className="space-y-4 pt-2">
         <div className="flex items-center justify-between">
-          <h2 className="text-xs font-mono text-slate-400 uppercase tracking-wider flex items-center gap-2">
-            <Palmtree className="w-4 h-4 text-indigo-400" /> State Machine Kanban Board
+          <h2 className="text-xs font-mono text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center gap-2 font-bold">
+            <Palmtree className="w-4 h-4 text-indigo-600 dark:text-indigo-400" /> State Machine Kanban Board
           </h2>
-          <span className="text-xs font-mono text-slate-500">
-            Current Perspective: <span className="text-indigo-400 font-semibold">{activeRole}</span>
+          <span className="text-xs font-mono text-slate-500 dark:text-slate-400">
+            Current Perspective: <span className="text-indigo-600 dark:text-indigo-400 font-semibold">{activeRole}</span>
           </span>
         </div>
 
@@ -242,22 +242,22 @@ export default function LeavesPage() {
             return (
               <div
                 key={col.status}
-                className="bg-slate-900/60 border border-slate-800/90 rounded-2xl p-4 flex flex-col space-y-4 min-h-[500px]"
+                className="bg-slate-100/70 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/90 rounded-2xl p-4 flex flex-col space-y-4 min-h-[500px]"
               >
                 {/* Column Header */}
-                <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+                <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
                   <div className="flex items-center space-x-2">
-                    <div className="p-1.5 rounded-lg bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+                    <div className="p-1.5 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-500/20">
                       <ColumnIcon className="w-4 h-4" aria-hidden="true" />
                     </div>
                     <div>
-                      <h3 className="text-xs font-bold text-slate-200 uppercase font-mono tracking-tight">
+                      <h3 className="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase font-mono tracking-tight">
                         {col.title}
                       </h3>
-                      <p className="text-[10px] text-slate-500">{col.subtitle}</p>
+                      <p className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">{col.subtitle}</p>
                     </div>
                   </div>
-                  <span className="px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 text-xs font-mono font-bold">
+                  <span className="px-2 py-0.5 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-mono font-bold">
                     {columnRequests.length}
                   </span>
                 </div>
@@ -265,7 +265,7 @@ export default function LeavesPage() {
                 {/* Cards Container */}
                 <div className="space-y-3.5 flex-1">
                   {columnRequests.length === 0 ? (
-                    <div className="p-6 text-center rounded-xl border border-dashed border-slate-800/80 text-slate-600 text-xs font-mono">
+                    <div className="p-6 text-center rounded-xl border border-dashed border-slate-300 dark:border-slate-800 text-slate-500 dark:text-slate-400 text-xs font-mono">
                       No requests in this stage
                     </div>
                   ) : (
@@ -281,18 +281,18 @@ export default function LeavesPage() {
                       return (
                         <Card
                           key={req.id}
-                          className="p-4 bg-[#0d1322] border-slate-800 hover:border-indigo-500/40 transition-all space-y-3"
+                          className="p-4 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-indigo-500/50 shadow-sm transition-all space-y-3"
                         >
                           <div className="flex items-start justify-between">
                             <div className="flex items-center space-x-2.5">
-                              <div className="w-8 h-8 rounded-lg bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center font-bold text-indigo-300 text-xs">
+                              <div className="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-600/20 border border-indigo-200 dark:border-indigo-500/30 flex items-center justify-center font-bold text-indigo-600 dark:text-indigo-300 text-xs">
                                 {req.employeeName[0]}
                               </div>
                               <div>
-                                <h4 className="text-xs font-bold text-slate-100">
+                                <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100">
                                   {req.employeeName}
                                 </h4>
-                                <span className="text-[10px] text-slate-500 font-mono">
+                                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono">
                                   {req.department}
                                 </span>
                               </div>
@@ -302,26 +302,26 @@ export default function LeavesPage() {
                             </Badge>
                           </div>
 
-                          <div className="space-y-1.5 text-[11px] font-mono text-slate-300 bg-slate-900/80 p-2.5 rounded-lg border border-slate-800/60">
-                            <div className="flex items-center justify-between text-slate-400">
+                          <div className="space-y-1.5 text-[11px] font-mono text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-950/80 p-2.5 rounded-lg border border-slate-200 dark:border-slate-800/60">
+                            <div className="flex items-center justify-between text-slate-600 dark:text-slate-400">
                               <span className="flex items-center gap-1">
-                                <Calendar className="w-3 h-3 text-indigo-400" /> Range:
+                                <Calendar className="w-3 h-3 text-indigo-600 dark:text-indigo-400" /> Range:
                               </span>
-                              <span className="text-slate-200">{req.startDate} ➔ {req.endDate}</span>
+                              <span className="text-slate-900 dark:text-slate-200 font-semibold">{req.startDate} ➔ {req.endDate}</span>
                             </div>
-                            <div className="flex items-center justify-between text-slate-400">
+                            <div className="flex items-center justify-between text-slate-600 dark:text-slate-400">
                               <span>Total Days:</span>
-                              <span className="font-bold text-indigo-300">{req.totalDays} Days</span>
+                              <span className="font-bold text-indigo-600 dark:text-indigo-300">{req.totalDays} Days</span>
                             </div>
                           </div>
 
-                          <p className="text-xs text-slate-400 line-clamp-2 italic">
+                          <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 italic">
                             &quot;{req.reason}&quot;
                           </p>
 
                           {/* Review Action Buttons */}
                           {(showManagerAction || showHRAction || showLockAction) && (
-                            <div className="pt-2 border-t border-slate-800/80">
+                            <div className="pt-2 border-t border-slate-200 dark:border-slate-800/80">
                               <Button
                                 variant="outline"
                                 size="sm"

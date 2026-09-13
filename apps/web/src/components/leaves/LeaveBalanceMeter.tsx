@@ -60,7 +60,7 @@ export const LeaveBalanceMeter: React.FC<LeaveBalanceMeterProps> = ({
         return (
           <Card key={item.category} hoverEffect className="relative overflow-hidden space-y-4">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-300 tracking-tight font-mono">
+              <span className="text-xs font-bold text-slate-700 dark:text-slate-300 tracking-tight font-mono uppercase">
                 {LEAVE_CATEGORY_LABELS[item.category]}
               </span>
               <div className={cn('p-2 rounded-xl border', colorConfig.badge)}>
@@ -70,19 +70,19 @@ export const LeaveBalanceMeter: React.FC<LeaveBalanceMeterProps> = ({
 
             <div className="flex items-baseline justify-between">
               <div>
-                <span className="text-2xl font-bold text-slate-100 font-mono tracking-tight">
+                <span className="text-2xl font-bold text-slate-900 dark:text-slate-100 font-mono tracking-tight">
                   {remainingDays}
                 </span>
-                <span className="text-xs text-slate-500 font-mono ml-1.5">
+                <span className="text-xs text-slate-600 dark:text-slate-400 font-mono ml-1.5">
                   / {item.allocatedDays} Days Remaining
                 </span>
               </div>
               <span
                 className={cn(
                   'text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full border',
-                  isHighUsage && 'bg-rose-500/10 text-rose-400 border-rose-500/20',
-                  isNearQuota && 'bg-amber-500/10 text-amber-400 border-amber-500/20',
-                  !isHighUsage && !isNearQuota && 'bg-slate-800 text-slate-400 border-slate-700'
+                  isHighUsage && 'bg-rose-500/10 text-rose-700 dark:text-rose-400 border-rose-500/30',
+                  isNearQuota && 'bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/30',
+                  !isHighUsage && !isNearQuota && 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-300 dark:border-slate-700'
                 )}
               >
                 {usagePercentage}% Used
@@ -96,7 +96,7 @@ export const LeaveBalanceMeter: React.FC<LeaveBalanceMeterProps> = ({
               aria-valuemin={0}
               aria-valuemax={100}
               aria-label={`${LEAVE_CATEGORY_LABELS[item.category]} balance meter: ${remainingDays} days remaining out of ${item.allocatedDays}`}
-              className="w-full bg-slate-800 rounded-full h-2 overflow-hidden"
+              className="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-2 overflow-hidden"
             >
               <div
                 className={cn('h-full transition-all duration-300 rounded-full', colorConfig.bar)}
@@ -104,7 +104,7 @@ export const LeaveBalanceMeter: React.FC<LeaveBalanceMeterProps> = ({
               />
             </div>
 
-            <div className="flex items-center justify-between text-[11px] font-mono text-slate-400 pt-1 border-t border-slate-800/60">
+            <div className="flex items-center justify-between text-[11px] font-mono text-slate-600 dark:text-slate-400 pt-1 border-t border-slate-200 dark:border-slate-800">
               <span>Used: {item.usedDays}d</span>
               <span>Pending: {item.pendingDays}d</span>
             </div>
