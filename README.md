@@ -10,7 +10,8 @@ This guide serves as your permanent revision manual, covering **commands (full &
 
 ```
                                   ┌───────────────────────────┐
-                                  │      CLIENT / POSTMAN     │
+                                  │   NEXT.JS WEB DASHBOARD   │
+                                  │    (apps/web - Vercel)    │
                                   └─────────────┬─────────────┘
                                                 │ HTTP REST (Port 3000)
                                                 ▼
@@ -34,6 +35,21 @@ This guide serves as your permanent revision manual, covering **commands (full &
                                   │    DTOs, Enums, Filters   │
                                   └───────────────────────────┘
 ```
+
+---
+
+## 💼 1.1 Next.js Enterprise Frontend (`apps/web`)
+
+The project includes **WorkforcePulse**, a modern Next.js 16 Enterprise SaaS web dashboard.
+
+🌐 **Vercel Live Deployment**: [https://vercel.com/vikaskumarsardars-projects/workforce-hub](https://vercel.com/vikaskumarsardars-projects/workforce-hub)  
+📁 **Frontend Documentation**: [apps/web/README.md](file:///home/user/Desktop/NestJS/apps/web/README.md)
+
+### Features:
+- **Employee Directory**: Searchable, multi-facet filterable table & grid view with detailed slide-over inspector.
+- **Leave Approval Studio**: 4-stage Kanban workflow state machine (`Submitted` ➔ `Manager Approved` ➔ `HR Verified` ➔ `Payroll Locked`).
+- **Automated Payroll Engine**: Gross-to-Net calculator with Redis Distributed Lock protection indicator.
+- **Light & Dark Theme Engine**: Complete WCAG AA contrast compliant theme switcher + Role perspective switcher.
 
 ---
 
