@@ -18,22 +18,29 @@ This guide serves as your permanent revision manual, covering **commands (full &
                                   ┌───────────────────────────┐
                                   │        API GATEWAY        │
                                   │   (@gateway/* App Layer)  │
-                                  └─────┬───────────────┬─────┘
-                                        │               │
-                     TCP Port 3001      │               │      TCP Port 3002
-              ┌─────────────────────────┘               └─────────────────────────┐
-              ▼                                                                   ▼
-┌───────────────────────────┐                                       ┌───────────────────────────┐
-│     AUTH MICROSERVICE     │                                       │    ORDERS MICROSERVICE    │
-│    (@auth/* App Layer)    │                                       │   (@orders/* App Layer)   │
-└───────────────────────────┘                                       └───────────────────────────┘
-                                                ▲
-                                                │ `@app/common/*`
-                                                │ (Shared Library)
-                                  ┌─────────────┴─────────────┐
-                                  │       COMMON LIBRARY      │
-                                  │    DTOs, Enums, Filters   │
-                                  └───────────────────────────┘
+                                  └─────┬───────┬───────┬─────┘
+                                        │       │       │
+                ┌───────────────────────┘       │       └───────────────────────┐
+                ▼                               ▼                               ▼
+  ┌───────────────────────────┐   ┌───────────────────────────┐   ┌───────────────────────────┐
+  │     AUTH MICROSERVICE     │   │     LEAVE MICROSERVICE    │   │    PAYROLL MICROSERVICE   │
+  │     (Port 3001 - TCP)     │   │     (Port 3003 - TCP)     │   │     (Port 3004 - TCP)     │
+  └───────────────────────────┘   └───────────────────────────┘   └───────────────────────────┘
+                │                               │                               │
+                └───────────────────────┬───────┴───────────────────────────────┘
+                                        │ Redis Pub/Sub / TCP
+                                        ▼
+                          ┌───────────────────────────┐
+                          │  NOTIFICATION SERVICE     │
+                          │     (Port 3005 - TCP)     │
+                          └───────────────────────────┘
+                                        ▲
+                                        │ `@app/common/*`
+                                        │ (Shared Library)
+                          ┌─────────────┴─────────────┐
+                          │       COMMON LIBRARY      │
+                          │  DB, DTOs, Enums, Filters │
+                          └───────────────────────────┘
 ```
 
 ---
@@ -202,41 +209,87 @@ npx nest start api-gateway -w
 ```
 /home/user/Desktop/NestJS/
 ├── apps/
-│   ├── api-gateway/
+│   ├── api-gateway/            # REST API Gateway & Routing (HTTP Port 3000)
 │   │   └── src/
-│   │       ├── auth/auth.controller.ts
-│   │       ├── orders/orders.controller.ts
+│   │       ├── auth/           # Auth REST endpoints
+│   │       ├── employees/      # Staff directory REST endpoints
+│   │       ├── leaves/         # Leave requests REST endpoints
+│   │       ├── payroll/        # Payroll engine REST endpoints
 │   │       ├── api-gateway.module.ts
 │   │       └── main.ts
-│   ├── auth-service/
+│   ├── auth-service/           # Authentication Microservice (TCP Port 3001)
 │   │   └── src/
 │   │       ├── auth-service.controller.ts
 │   │       ├── auth-service.service.ts
 │   │       ├── auth-service.module.ts
 │   │       └── main.ts
-│   └── orders-service/
-│       └── src/
-│           ├── orders-service.controller.ts
-│           ├── orders-service.service.ts
-│           ├── orders-service.module.ts
-│           └── main.ts
+│   ├── leave-service/          # Leave Approval Engine Microservice (TCP Port 3003)
+│   │   └── src/
+│   │       ├── leave-service.controller.ts
+│   │       ├── leave-service.service.ts
+│   │       ├── leave-service.module.ts
+│   │       └── main.ts
+│   ├── notification-service/   # Email & Event Notification Service (TCP Port 3005)
+│   │   └── src/
+│   │       ├── notification-service.controller.ts
+│   │       ├── notification-service.service.ts
+│   │       ├── notification-service.module.ts
+│   │       └── main.ts
+│   ├── payroll-service/        # Tax & Salary Calculation Engine (TCP Port 3004)
+│   │   └── src/
+│   │       ├── payroll-service.controller.ts
+│   │       ├── payroll-service.service.ts
+│   │       ├── payroll-service.module.ts
+│   │       └── main.ts
+│   └── web/                    # Next.js 16 Enterprise SaaS Web App
+│       ├── src/
+│       │   ├── app/
+│       │   │   ├── (dashboard)/
+│       │   │   │   ├── dashboard/  # Analytics KPI overview
+│       │   │   │   ├── employees/  # Directory (Table & Grid views)
+│       │   │   │   ├── leaves/     # 4-stage Kanban state machine
+│       │   │   │   └── payroll/    # Gross-to-Net calculator & Payslips
+│       │   │   ├── login/
+│       │   │   ├── register-tenant/
+│       │   │   ├── globals.css     # CSS Custom Properties & Design Tokens
+│       │   │   └── layout.tsx
+│       │   ├── components/
+│       │   │   ├── employees/  # OnboardingModal, EmployeeDrawer
+│       │   │   ├── layout/     # Sidebar, Header, ThemeToggle
+│       │   │   ├── leaves/     # LeaveBalanceMeter, ApprovalDecisionModal
+│       │   │   ├── payroll/    # PayslipModal, RedisLockIndicator
+│       │   │   └── ui/         # Button, Card, DataTable, Badge, StatCard
+│       │   ├── lib/            # Utility helpers & constants
+│       │   ├── store/          # Zustand stores (useAuthStore, useThemeStore)
+│       │   └── types/          # TypeScript Domain Interfaces
+│       ├── vercel.json
+│       └── package.json
 ├── libs/
-│   └── common/
+│   └── common/                 # Shared Monorepo Package (@app/common)
 │       └── src/
-│           ├── config/config.keys.ts
-│           ├── constants/services.ts
-│           ├── constants/routes.ts
-│           ├── constants/messages.ts
-│           ├── dtos/create-user.dto.ts
-│           ├── dtos/login-user.dto.ts
-│           ├── dtos/create-order.dto.ts
-│           ├── enums/order-status.enum.ts
-│           ├── filters/rpc-exception.filter.ts
-│           ├── interfaces/user.interface.ts
-│           ├── interfaces/order.interface.ts
+│           ├── config/         # Environment & Config Keys
+│           ├── constants/      # Microservice Ports, Routes, Messages
+│           ├── database/       # TypeORM / Prisma DB Managers
+│           ├── decorators/     # Custom NestJS Decorators
+│           ├── dtos/           # Shared DTO Contracts
+│           ├── enums/          # Domain Enums (Roles, LeaveStatus, PayrollStatus)
+│           ├── filters/        # RpcToHttpExceptionFilter
+│           ├── guards/         # Auth & Role RBAC Guards
+│           ├── interfaces/     # Shared Interfaces
+│           ├── logging/        # Pino / Structured Logger Setup
+│           ├── metrics/        # Prometheus Metrics Exporters
+│           ├── outbox/         # Transactional Outbox Pattern
+│           ├── redis/          # Distributed Lock & Caching Client
+│           ├── security/       # JWT Tokens & Hashing
+│           ├── tracing/        # OpenTelemetry & Tempo Tracing
 │           └── index.ts
-├── .env
-├── nest-cli.json
+├── docker-compose.yml          # Local PostgreSQL, Redis, Prometheus, Tempo
+├── Dockerfile                  # Multi-Stage Production Build Definition
+├── prometheus.yml              # Prometheus Scrape Configuration
+├── tempo.yaml                  # OpenTelemetry Trace Exporter Config
+├── render.yaml                 # Render.com IaC Blueprint Definition
+├── vercel.json                 # Vercel Monorepo Frontend Config
+├── nest-cli.json               # NestJS Monorepo CLI Configuration
 ├── package.json
 └── tsconfig.json
 ```

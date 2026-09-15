@@ -31,13 +31,36 @@ Welcome to the frontend application of **WorkforcePulse** — a modern, high-den
 
 ---
 
-## 🛠️ Tech Stack & Architecture
+## 🗂️ Directory Structure
 
-- **Framework**: [Next.js 16 (App Router)](https://nextjs.org)
-- **Styling**: [Tailwind CSS v4](https://tailwindcss.com) + CSS Custom Variables
-- **State Management**: [Zustand](https://zustand-demo.pmnd.rs/) (Auth & Theme stores)
-- **Icons**: [Lucide React](https://lucide.dev)
-- **Deployment**: [Vercel](https://vercel.com)
+```
+apps/web/
+├── src/
+│   ├── app/
+│   │   ├── (dashboard)/
+│   │   │   ├── dashboard/       # Dashboard Overview & KPI Metrics
+│   │   │   ├── employees/       # Employee Directory (Table & Grid Views)
+│   │   │   ├── leaves/          # Leave Approval Studio (4-Stage Kanban)
+│   │   │   ├── payroll/         # Automated Payroll Engine & Payslips
+│   │   │   └── layout.tsx       # Dashboard layout (Sidebar + Header)
+│   │   ├── login/               # Authentication Login page
+│   │   ├── register-tenant/     # Multi-tenant onboarding registration
+│   │   ├── favicon.ico
+│   │   ├── globals.css          # Design tokens & custom theme variables
+│   │   └── layout.tsx           # Root app layout
+│   ├── components/
+│   │   ├── employees/           # OnboardingModal, EmployeeDrawer
+│   │   ├── layout/              # Sidebar, Header, ThemeToggle
+│   │   ├── leaves/              # LeaveBalanceMeter, ApprovalDecisionModal
+│   │   ├── payroll/             # PayslipModal, RedisLockIndicator
+│   │   └── ui/                  # Button, Card, DataTable, Badge, StatCard, Input
+│   ├── lib/                     # Utilities, constants & currency formatters
+│   ├── store/                   # Zustand stores (useAuthStore, useThemeStore)
+│   └── types/                   # TypeScript Domain Interfaces & Types
+├── vercel.json                  # Vercel deployment configuration
+├── package.json
+└── tsconfig.json
+```
 
 ---
 
